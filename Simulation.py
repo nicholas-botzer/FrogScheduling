@@ -1,6 +1,8 @@
 import sys
 from simso.core import Model
 from simso.configuration import Configuration
+from GeneticAlgorithm import GeneticAlgorithm, Chromosome, Task
+
 
 def getAverageNormalizedLaxity(model):
 
@@ -26,9 +28,9 @@ def main(argv):
     # Init a model from the configuration.
     model = Model(configuration)
 
-    # Execute the simulation.
-    model.run_model()
+    geneticAlgorithm = GeneticAlgorithm(model.task_list)
 
+    # geneticAlgorithm.genetic_algorithm(model)
 
     print("Total Migrations: " + str(model.results.total_migrations))
     print("Total Pre-emptions: " + str(model.results.total_preemptions))
