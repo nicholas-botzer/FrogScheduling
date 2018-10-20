@@ -15,27 +15,6 @@ def getAverageNormalizedLaxity(model):
     return totalNormalizedLaxity / count
             
 
-########### GA IMPLEMENTATION DETAILS BELOW ##############################
-
-def initial_population():
-    pass
-
-def crossover():
-    pass
-
-def mutate():
-    pass
-
-def evaluate_fitness():
-    pass
-
-def genetic_algorithm(model):
-    pass
-
-
-
-########### GA IMPLEMENTATION DETAILS ABOVE ##############################
-
 def main(argv):
     if len(argv) == 2:
         # Configuration load from a file.
