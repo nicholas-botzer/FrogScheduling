@@ -1,4 +1,6 @@
 import random
+from Chromosome import Chromosome
+from ChromosomeTask import ChromosomeTask
 
 class GeneticAlgorithm():
 
@@ -19,7 +21,8 @@ class GeneticAlgorithm():
             random.shuffle(taskList)
             priority = 1
             for task in taskList:
-                chromosome.insert_task(task, priority)
+                chromosomeTask = ChromosomeTask(task.deadline, task.arrival_time, task.wcet)
+                chromosome.insert_task(chromosomeTask, priority)
                 priority += 1
             
             self.chromosomeList.append(chromosome)
@@ -34,7 +37,16 @@ class GeneticAlgorithm():
         pass
 
     def evaluate_fitness(self, model):
-        pass
+
+        missedDeadlinesScore = 1 - (model.results.total_exceeded_count / len(model.taks))
+
+        fitnessScore = missedDeadlinesScore + self.getAverageNormalizedLaxity(model)
+
+        # print("Total Migrations: " + str(model.results.total_migrations))
+        # print("Total Pre-emptions: " + str(model.results.total_preemptions))
+        # print("Total Exceeded Count: " + str(model.results.total_exceeded_count))
+
+        return fitnessScore
 
     def genetic_algorithm(self, model, iterations=None):
         
@@ -52,31 +64,3 @@ class GeneticAlgorithm():
                     count += 1
 
         return totalNormalizedLaxity / count
-
-
-
-
-
-
-
-
-
-class Chromosome():
-
-    def __init__(self):
-        self.taskToPriorityDict = {}
-
-    def insert_task(self, task,priority):
-        self.taskToPriorityDict[task] = priority
-
-    def update_task(self, task, priority):
-        if(task in self.taskToPriorityDict):
-            self.taskToPriorityDict[task] = priority
-
-class Task():
-
-    def __init__(self, deadline, arrival_time, wcet):
-        self.deadline = deadline
-        self.arrival_time = arrival_time
-        self.wcet = wcet
-

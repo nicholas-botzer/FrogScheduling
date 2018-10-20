@@ -1,22 +1,9 @@
 import sys
 from simso.core import Model
 from simso.configuration import Configuration
-from GeneticAlgorithm import GeneticAlgorithm, Chromosome, Task
+from GeneticAlgorithm import GeneticAlgorithm
 
-
-def getAverageNormalizedLaxity(model):
-
-    count = 0
-    totalNormalizedLaxity = 0
-    for task in model.results.tasks.values():
-        for job in task.jobs:
-            if(job.task.deadline and job.response_time):
-                totalNormalizedLaxity += job.normalized_laxity
-                count += 1
-
-    return totalNormalizedLaxity / count
             
-
 def main(argv):
     if len(argv) == 2:
         # Configuration load from a file.
@@ -32,9 +19,5 @@ def main(argv):
 
     # geneticAlgorithm.genetic_algorithm(model)
 
-    print("Total Migrations: " + str(model.results.total_migrations))
-    print("Total Pre-emptions: " + str(model.results.total_preemptions))
-    print("Total Exceeded Count: " + str(model.results.total_exceeded_count))
-    print("Average Normalized Laxity: " +   "{:.3f}".format(getAverageNormalizedLaxity(model)))
 
 main(sys.argv)
