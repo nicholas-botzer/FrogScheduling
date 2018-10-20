@@ -2,7 +2,6 @@ import sys
 from simso.core import Model
 from simso.configuration import Configuration
 
-
 def getAverageNormalizedLaxity(model):
 
     count = 0
@@ -12,9 +11,30 @@ def getAverageNormalizedLaxity(model):
             if(job.task.deadline and job.response_time):
                 totalNormalizedLaxity += job.normalized_laxity
                 count += 1
-                
+
     return totalNormalizedLaxity / count
             
+
+########### GA IMPLEMENTATION DETAILS BELOW ##############################
+
+def initial_population():
+
+
+def crossover():
+
+
+def mutate():
+
+
+def evaluate_fitness():
+
+
+def genetic_algorithm(model):
+
+
+
+
+########### GA IMPLEMENTATION DETAILS ABOVE ##############################
 
 def main(argv):
     if len(argv) == 2:
