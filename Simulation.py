@@ -18,19 +18,19 @@ def getAverageNormalizedLaxity(model):
 ########### GA IMPLEMENTATION DETAILS BELOW ##############################
 
 def initial_population():
-
+    pass
 
 def crossover():
-
+    pass
 
 def mutate():
-
+    pass
 
 def evaluate_fitness():
-
+    pass
 
 def genetic_algorithm(model):
-
+    pass
 
 
 
