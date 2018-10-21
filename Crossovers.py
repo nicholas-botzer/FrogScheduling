@@ -72,10 +72,10 @@ class Crossovers(object):
     def OX1(cls, taskDict1, taskDict2, partition1=None, partition2= None):
         
     ### Verification
-        if not isinstance(taskDict1, dict): raise ValueError('Dict 1 not a dict!');
-        if not isinstance(taskDict2, dict): raise ValueError('Dict 2 not a dict!');
+        if not isinstance(taskDict1, dict): raise ValueError('Dict 1 not a dict!')
+        if not isinstance(taskDict2, dict): raise ValueError('Dict 2 not a dict!')
         if not isinstance(partition1, int) or not isinstance(partition2, int): 
-            raise ValueError('Partition1 or Partition2 is not an int!');
+            raise ValueError('Partition1 or Partition2 is not an int!')
         if len(taskDict1) != len(taskDict2):
             raise ValueError('Dictionary sizes don\'t match!')
         if partition1 and ( partition1 < 0 or partition1 > len(taskDict1)+1 ):
@@ -141,12 +141,12 @@ class Crossovers(object):
     def OX2(cls, taskDict1, taskDict2, numPositions=0, positionList=None):
         ## Verification and Cleanup
         # Type checking
-        if not isinstance(taskDict1, dict): raise ValueError('Dict 1 not a dict!');
-        if not isinstance(taskDict2, dict): raise ValueError('Dict 2 not a dict!');
+        if not isinstance(taskDict1, dict): raise ValueError('Dict 1 not a dict!')
+        if not isinstance(taskDict2, dict): raise ValueError('Dict 2 not a dict!')
         if not isinstance(numPositions, int): 
             raise ValueError('Number of positions is not an int!')
         if positionList and not isinstance(positionList, list):
-            raise ValueError('Position list is not a list!');
+            raise ValueError('Position list is not a list!')
         # Value checking
         if len(taskDict1) != len(taskDict2):
             raise ValueError('Dictionary sizes don\'t match!')
@@ -278,7 +278,8 @@ def testOX2():
 
 ### Run Tests
 #testOX1()
-testOX2()
+#testOX2()
+#commit test
 
     
 
