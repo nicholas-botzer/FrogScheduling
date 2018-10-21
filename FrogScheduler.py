@@ -11,6 +11,9 @@ class FrogScheduler(Scheduler):
 
     def on_terminated(self, job):
         pass
-        
+
     def schedule(self, cpu):
         pass
+
+    def initalizePriorityQueue(self, priorityQueue):
+        self.priorityQueue = priorityQueue
