@@ -1,6 +1,7 @@
 import random
 from Chromosome import Chromosome
 from ChromosomeTask import ChromosomeTask
+from Crossovers import Crossovers
 
 class GeneticAlgorithm():
 
@@ -9,58 +10,78 @@ class GeneticAlgorithm():
         self.numberOfChromosomes = numberOfChromosomes
         self.initial_population(taskList)
 
-    """
+    '''
         Initializes the chromosome's for the GA
         Args:
             - `taskList`: The list of tasks for the simulation
+        Return:
+            - Nothing, just creates the initial population for the class
 
-    """
+    '''
     def initial_population(self, taskList):
         for x in range(0, self.numberOfChromosomes):
             chromosome = Chromosome()
             random.shuffle(taskList)
             priority = 1
             for task in taskList:
-                chromosomeTask = ChromosomeTask(task.deadline, task.arrival_time, task.wcet)
+                chromosomeTask = ChromosomeTask(task.name, task.deadline, task._task_info.activation_date, task.wcet)
                 chromosome.insert_task(chromosomeTask, priority)
                 priority += 1
-            
+        
             self.chromosomeList.append(chromosome)
-                        
-    def selection(self):
-        pass
 
-    def crossover(self):
-        pass
+    '''
+        Selects the number of chromosomes that will live on to the next generation
+        Args: N/A
+        Return:
+            - List of chromosomes that will live on
+    '''          
+    def selection(self, numberOfChromosomesToLive):
+        chromosomesToLiveList = []
+        for x in range (0,numberOfChromosomesToLive):
+            chromosomesToLiveList.append(self.roulette_wheel_selection())
+        
+        return chromosomesToLiveList
 
+    '''
+        Performs a roulette wheel selection the the chromosome list to get a chromosome
+        Args: N/A
+        Return:
+            - Chromosome selected to continue living it's life
+    '''
+    def roulette_wheel_selection(self):
+        max = sum(chromosome.fitnessScore for chromosome in self.chromosomeList)
+    
+        pick = random.uniform(0, max)
+        current = 0
+        for chromosome in self.chromosomeList:
+            current += chromosome.fitnessScore
+        if current > pick:
+            return chromosome
+
+    '''
+    Args
+    - parentChromosomesList: chromosomes selected to be the parents
+    - numberOfChildrenDesired: maximum value in partition range
+    Return
+    - list of new chromosomes created from the parent chromosomes
+    '''
+    def crossover(self, parentChromosomesList, numberOfChildrenDesired=0):
+
+        newChromosomesList = []
+        for x in range(0,numberOfChildrenDesired):
+            parentOneIndex = random.randint(0, len(parentChromosomesList))
+            parentTwoIndex = random.randint(0, len(parentChromosomesList))
+
+            newChromosome = Chromosome()
+            newChromosome.taskToPriorityDict = Crossovers().OX1(parentChromosomesList[parentOneIndex].taskToPriorityDict,
+                parentChromosomesList[parentTwoIndex].taskToPriorityDict)
+
+            newChromosomesList.append(newChromosome)
+            print(newChromosome)
+
+        return newChromosomesList
+
+                
     def mutate(self):
         pass
-
-    def evaluate_fitness(self, model):
-
-        missedDeadlinesScore = 1 - (model.results.total_exceeded_count / len(model.taks))
-
-        fitnessScore = missedDeadlinesScore + self.getAverageNormalizedLaxity(model)
-
-        # print("Total Migrations: " + str(model.results.total_migrations))
-        # print("Total Pre-emptions: " + str(model.results.total_preemptions))
-        # print("Total Exceeded Count: " + str(model.results.total_exceeded_count))
-
-        return fitnessScore
-
-    def genetic_algorithm(self, model, iterations=None):
-        
-        # Execute the simulation.
-        model.run_model()
-
-
-    def getAverageNormalizedLaxity(self, model):
-        count = 0
-        totalNormalizedLaxity = 0
-        for task in model.results.tasks.values():
-            for job in task.jobs:
-                if(job.task.deadline and job.response_time):
-                    totalNormalizedLaxity += job.normalized_laxity
-                    count += 1
-
-        return totalNormalizedLaxity / count
