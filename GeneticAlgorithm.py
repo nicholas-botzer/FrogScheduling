@@ -69,22 +69,25 @@ class GeneticAlgorithm():
     def crossover(self, parentChromosomesList, numberOfChildrenDesired=0):
 
         newChromosomesList = []
-        for x in range(0,numberOfChildrenDesired):
+        for x in range(0,numberOfChildrenDesired-1):
             parentOneIndex = random.randint(0, len(parentChromosomesList)-1)
             parentTwoIndex = random.randint(0, len(parentChromosomesList)-1)
 
-            newChromosome = Chromosome()
+            newChromosomeOne = Chromosome()
+            newChromosomeTwo = Chromosome()
+            # for chromo in parentChromosomesList:
+            #     print("Chromosome #")
+            #     print(type(chromo.taskToPriorityDict))
 
+            # print("Dict 1 " , parentChromosomesList[parentOneIndex].taskToPriorityDict)
+            # print("Dict 2 " , parentChromosomesList[parentTwoIndex].taskToPriorityDict)
 
-            print("Dict 1 " , parentChromosomesList[parentOneIndex].taskToPriorityDict)
-            print("Dict 2 " , parentChromosomesList[parentTwoIndex].taskToPriorityDict)
-
-            newChromosome.taskToPriorityDict = Crossovers.OX1(parentChromosomesList[parentOneIndex].taskToPriorityDict,
+            newChromosomeOne.taskToPriorityDict, newChromosomeTwo.taskToPriorityDict = Crossovers.OX1(parentChromosomesList[parentOneIndex].taskToPriorityDict,
                 parentChromosomesList[parentTwoIndex].taskToPriorityDict)
 
 
-            newChromosomesList.append(newChromosome)
-            print(newChromosome)
+            newChromosomesList.append(newChromosomeOne)
+            newChromosomesList.append(newChromosomeTwo)
 
         return newChromosomesList
 
