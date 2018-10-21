@@ -72,6 +72,10 @@ class Crossovers(object):
     def OX1(cls, taskDict1, taskDict2, partition1=None, partition2= None):
         
     ### Verification
+        if not isinstance(taskDict1, dict): raise ValueError('Dict 1 not a dict!');
+        if not isinstance(taskDict2, dict): raise ValueError('Dict 2 not a dict!');
+        if not isinstance(partition1, int) or not isinstance(partition2, int): 
+            raise ValueError('Partition1 or Partition2 is not an int!');
         if len(taskDict1) != len(taskDict2):
             raise ValueError('Dictionary sizes don\'t match!')
         if partition1 and ( partition1 < 0 or partition1 > len(taskDict1)+1 ):
@@ -147,7 +151,11 @@ class Crossovers(object):
                 raise ValueError('Given invalid position!')
 
         ## Get positions list
-        #cls.generateRandIdxList(0,numTasks,2)
+        if positionList == None:
+            if numPositions == 0:
+            else:
+                positionList = cls.generateRandIdxList(0,numTasks,2)
+
 
 
 
