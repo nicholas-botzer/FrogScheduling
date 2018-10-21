@@ -22,7 +22,7 @@ class GeneticAlgorithm():
         for x in range(0, self.numberOfChromosomes):
             chromosome = Chromosome()
             random.shuffle(taskList)
-            priority = 1
+            priority = 0
             for task in taskList:
                 chromosomeTask = ChromosomeTask(task.name, task.deadline, task._task_info.activation_date, task.wcet)
                 chromosome.insert_task(chromosomeTask, priority)
@@ -70,12 +70,18 @@ class GeneticAlgorithm():
 
         newChromosomesList = []
         for x in range(0,numberOfChildrenDesired):
-            parentOneIndex = random.randint(0, len(parentChromosomesList))
-            parentTwoIndex = random.randint(0, len(parentChromosomesList))
+            parentOneIndex = random.randint(0, len(parentChromosomesList)-1)
+            parentTwoIndex = random.randint(0, len(parentChromosomesList)-1)
 
             newChromosome = Chromosome()
+
+
+            print("Dict 1 " , parentChromosomesList[parentOneIndex].taskToPriorityDict)
+            print("Dict 2 " , parentChromosomesList[parentTwoIndex].taskToPriorityDict)
+
             newChromosome.taskToPriorityDict = Crossovers.OX1(parentChromosomesList[parentOneIndex].taskToPriorityDict,
                 parentChromosomesList[parentTwoIndex].taskToPriorityDict)
+
 
             newChromosomesList.append(newChromosome)
             print(newChromosome)
