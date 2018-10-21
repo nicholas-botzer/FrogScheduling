@@ -124,8 +124,7 @@ class Crossovers(object):
             tL2idx += 1 #task list indices incremented either way
         #Return dict
         newTaskDict1, newTaskDict2 = {}, {}
-        for idx, taskTuple in enumerate(zip(newTaskList1,newTaskList2)):
-            task1, task2 = taskTuple
+        for idx, (task1, task2) in enumerate(zip(newTaskList1,newTaskList2)):
             newTaskDict1[task1] = idx
             newTaskDict2[task2] = idx
         return newTaskDict1, newTaskDict2
@@ -140,21 +139,76 @@ class Crossovers(object):
     '''
     @classmethod 
     def OX2(cls, taskDict1, taskDict2, numPositions=0, positionList=None):
-        ## Verification
+        ## Verification and Cleanup
+        # Type checking
+        if not isinstance(taskDict1, dict): raise ValueError('Dict 1 not a dict!');
+        if not isinstance(taskDict2, dict): raise ValueError('Dict 2 not a dict!');
+        if not isinstance(numPositions, int): 
+            raise ValueError('Number of positions is not an int!')
+        if positionList and not isinstance(positionList, list):
+            raise ValueError('Position list is not a list!');
+        # Value checking
         if len(taskDict1) != len(taskDict2):
             raise ValueError('Dictionary sizes don\'t match!')
-        positionList = sorted(list(set(positionList))) #cleanup duplicates/sort
-        if numPositions > len(taskDict1) or len(positionList) > len(taskDict1):
+        if numPositions > len(taskDict1):
             raise ValueError('Number of positions is greater than total items!')
-        for pos in positionList:
-            if pos >= len(taskDict1):
-                raise ValueError('Given invalid position!')
+        if positionList: #cleanup duplicates/sort
+            positionList = sorted(list(set(positionList)))
+            if len(positionList) > len(taskDict1):
+                raise ValueError('Number of positions is greater than total items!')
+            for pos in positionList:
+                if pos >= len(taskDict1):
+                    raise ValueError('Given invalid position!')
 
-        ## Get positions list
-        if positionList == None:
+        ## Get positions list and partial new task lists
+        numTasks = len(taskDict1)
+        taskList1 = cls.dictToList(taskDict1)
+        taskList2 = cls.dictToList(taskDict2)
+        newTaskList1, newTaskList2 = list(taskList1), list(taskList2) #copy
+        if positionList == None or len(positionList) == 0:
             if numPositions == 0:
+                positionList = cls.generateRandIdxList(0,numTasks-1,
+                    random.randint(int(numTasks/5),int(4*numTasks/5)))
             else:
-                positionList = cls.generateRandIdxList(0,numTasks,2)
+                positionList = cls.generateRandIdxList(0,numTasks-1,
+                    numPositions)
+        for pos in positionList:
+            taskinP1, taskinP2 = taskList1[pos], taskList2[pos]
+            for idx, (t1, t2) in enumerate(zip(taskList1,taskList2)):
+                t1done,t2done = False,False
+                if t2.name == taskinP1.name:
+                    newTaskList2[idx] = None
+                    t2done = True
+                if t1.name == taskinP2.name:
+                    newTaskList1[idx] = None
+                    t1done = True
+                if t1done and t2done:
+                    break
+        
+        ## Crossover
+        TL1idx, TL2idx = 0, 0
+        for idx,(t1,t2) in enumerate(zip(newTaskList1,newTaskList2)):
+            if t1 == None:
+                while True:
+                    if not cls.checkTaskInTList(taskList2[TL2idx],newTaskList1):
+                        newTaskList1[idx] = taskList2[TL2idx]
+                        TL2idx += 1
+                        break
+                    TL2idx += 1
+            if t2 == None:
+                while True:
+                    if not cls.checkTaskInTList(taskList1[TL1idx],newTaskList2):
+                        newTaskList2[idx] = taskList1[TL1idx]
+                        TL1idx += 1
+                        break
+                    TL1idx += 1
+
+        # Return dicts
+        newTaskDict1, newTaskDict2 = {}, {}
+        for idx, (task1, task2) in enumerate(zip(newTaskList1,newTaskList2)):
+            newTaskDict1[task1] = idx
+            newTaskDict2[task2] = idx
+        return newTaskDict1, newTaskDict2
 
 
 
@@ -190,14 +244,41 @@ def testOX1():
     TD2 = {taskObj('2'):0,taskObj('4'):1,taskObj('6'):2,taskObj('8'):3,
             taskObj('7'):4,taskObj('5'):5,taskObj('3'):6,taskObj('1'):7}
     newTD1, newTD2 = Crossovers.OX1(TD1,TD2,partition1=2,partition2=5)
+    test1,test2 = [],[]
+    for (k1,v1),(k2,v2) in zip(newTD1.items(),newTD2.items()):
+        test1.append((k1.name,v1))
+        test2.append((k2.name,v2))
     print ('Test 1:')
-    for k,v in newTD1.items():
-        print ('Task: %s, Idx/Priority: %d' % (k.name,v))
+    for e in sorted(test1, key=lambda x: x[1] ):
+        print ('Task: %s, Idx/Priority: %d' % (e[0],e[1]))
     print ('Test 2:')
-    for k,v in newTD2.items():
-        print ('Task: %s, Idx/Priority: %d' % (k.name,v))
+    for e in sorted(test2, key=lambda x: x[1] ):
+        print ('Task: %s, Idx/Priority: %d' % (e[0],e[1]))
 
-# testOX1()
+def testOX2():
+    TD1 = {taskObj('1'):0,taskObj('2'):1,taskObj('3'):2,taskObj('4'):3,
+            taskObj('5'):4,taskObj('6'):5,taskObj('7'):6,taskObj('8'):7}
+    TD2 = {taskObj('2'):0,taskObj('4'):1,taskObj('6'):2,taskObj('8'):3,
+            taskObj('7'):4,taskObj('5'):5,taskObj('3'):6,taskObj('1'):7}
+    
+    newTD1, newTD2 = Crossovers.OX2(TD1,TD2,positionList=[1,2,5])
+    test1,test2 = [],[]
+    for (k1,v1),(k2,v2) in zip(newTD1.items(),newTD2.items()):
+        test1.append((k1.name,v1))
+        test2.append((k2.name,v2))
+        
+    print ('Test 1:')
+    for e in sorted(test1, key=lambda x: x[1] ):
+        print ('Task: %s, Idx/Priority: %d' % (e[0],e[1]))
+    print ('Test 2:')
+    for e in sorted(test2, key=lambda x: x[1] ):
+        print ('Task: %s, Idx/Priority: %d' % (e[0],e[1]))
+
+
+
+### Run Tests
+#testOX1()
+testOX2()
 
     
 
