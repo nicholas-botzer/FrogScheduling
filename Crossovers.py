@@ -210,7 +210,19 @@ class Crossovers(object):
             newTaskDict2[task2] = idx
         return newTaskDict1, newTaskDict2
 
-
+    '''
+    Position-based crossover operator.
+    Args
+    - taskDict1: chrom. dictionary that maps tasks to its priority (Obj -> int)
+    - taskDict2: chrom. dictionary that maps tasks to its priority (Obj -> int)
+    - numPositions: optionally indicate the number of positions to generate
+    - positionList: optionally indicate a custom position list
+    Return
+    - New taskDict with the crossover of taskDict1 and taskDict2
+    '''
+    @classmethod 
+    def POS(cls, taskDict1, taskDict2, numPositions=0, positionList=None):
+        pass # TODO later
 
 
 ## ======================================================================== ##
