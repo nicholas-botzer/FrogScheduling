@@ -74,7 +74,7 @@ class GeneticAlgorithm():
             parentTwoIndex = random.randint(0, len(parentChromosomesList))
 
             newChromosome = Chromosome()
-            newChromosome.taskToPriorityDict = Crossovers().OX1(parentChromosomesList[parentOneIndex].taskToPriorityDict,
+            newChromosome.taskToPriorityDict = Crossovers.OX1(parentChromosomesList[parentOneIndex].taskToPriorityDict,
                 parentChromosomesList[parentTwoIndex].taskToPriorityDict)
 
             newChromosomesList.append(newChromosome)

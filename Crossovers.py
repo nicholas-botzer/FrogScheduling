@@ -74,8 +74,9 @@ class Crossovers(object):
     ### Verification
         if len(taskDict1) != len(taskDict2):
             raise ValueError('Dictionary sizes don\'t match!')
-        if partition1 < 0 or partition2 < 0 or \
-            partition1 > len(taskDict1)+1 or partition2 > len(taskDict2)+1:
+        if partition1 and ( partition1 < 0 or partition1 > len(taskDict1)+1 ):
+            raise ValueError('Invalid partition indexes!')
+        if partition2 and  ( partition2 < 0 or partition2 > len(taskDict1)+1 ):
             raise ValueError('Invalid partition indexes!')
 
     ### Shuffle
@@ -165,7 +166,7 @@ def printTaskList(taskList):
             s = 'None'
         else:
             s = task.name
-        print 'Idx: %d: TL: %s' % (idx,s)
+        print('Idx: %d: TL: %s' % (idx,s))
     
 '''
 Emulator task object.
@@ -179,16 +180,16 @@ def testOX1():
     TD1 = {taskObj('1'):0,taskObj('2'):1,taskObj('3'):2,taskObj('4'):3,
             taskObj('5'):4,taskObj('6'):5,taskObj('7'):6,taskObj('8'):7}
     TD2 = {taskObj('2'):0,taskObj('4'):1,taskObj('6'):2,taskObj('8'):3,
-            taskObj('7'):4,taskObj('5'):5,taskObj('3'):6,taskObj('1'):7,taskObj('10'):70}
+            taskObj('7'):4,taskObj('5'):5,taskObj('3'):6,taskObj('1'):7}
     newTD1, newTD2 = Crossovers.OX1(TD1,TD2,partition1=2,partition2=5)
-    print 'Test 1:'
+    print ('Test 1:')
     for k,v in newTD1.items():
-        print 'Task: %s, Idx/Priority: %d' % (k.name,v)
-    print 'Test 2:'
+        print ('Task: %s, Idx/Priority: %d' % (k.name,v))
+    print ('Test 2:')
     for k,v in newTD2.items():
-        print 'Task: %s, Idx/Priority: %d' % (k.name,v)
+        print ('Task: %s, Idx/Priority: %d' % (k.name,v))
 
-testOX1()
+# testOX1()
 
     
 
