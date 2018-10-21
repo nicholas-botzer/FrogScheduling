@@ -75,12 +75,6 @@ class GeneticAlgorithm():
 
             newChromosomeOne = Chromosome()
             newChromosomeTwo = Chromosome()
-            # for chromo in parentChromosomesList:
-            #     print("Chromosome #")
-            #     print(type(chromo.taskToPriorityDict))
-
-            # print("Dict 1 " , parentChromosomesList[parentOneIndex].taskToPriorityDict)
-            # print("Dict 2 " , parentChromosomesList[parentTwoIndex].taskToPriorityDict)
 
             newChromosomeOne.taskToPriorityDict, newChromosomeTwo.taskToPriorityDict = Crossovers.OX1(parentChromosomesList[parentOneIndex].taskToPriorityDict,
                 parentChromosomesList[parentTwoIndex].taskToPriorityDict)
@@ -92,5 +86,14 @@ class GeneticAlgorithm():
         return newChromosomesList
 
                 
-    def mutate(self):
-        pass
+    def mutate(self, mutationRate=1.5):
+        
+        for chromosome in self.chromosomeList:
+
+            mutationChance = random.uniform(0,100)
+            if(mutationChance < mutationRate):
+                #time to mutateL!!!
+                dictionary = chromosome.taskToPriorityDict
+                key1, key2 = random.sample(list(dictionary), 2)
+                dictionary[key1], dictionary[key2] = dictionary[key2], dictionary[key1]
+

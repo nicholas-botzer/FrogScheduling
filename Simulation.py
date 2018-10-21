@@ -34,11 +34,12 @@ def main(argv):
 
         # print(childChromosomeList)
         nextChromosomeGenerationList.extend(childChromosomeList)
-
-        #mutate
-
+        
         #set the GA's list of chromosomes to this new list
         geneticAlgorithm.chromosomeList = nextChromosomeGenerationList
+
+        #mutate the generation before running again
+        geneticAlgorithm.mutate()
 
 
 
