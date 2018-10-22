@@ -28,7 +28,8 @@ class FrogScheduler(Scheduler):
                 priorList.append((self.getTaskPriority(job.task),
                                   1.0/job._absolute_deadline,
                                   job))
-            highestPriorJob = max(priorList)[0,2] # (priority, job)
+            highestPriorTup = max(priorList)
+            highestPriorJob = [highestPriorTup[0],highestPriorTup[2]] #(priority, job)
 
             freeProcessor =  self.getFreeProcessor()
 
