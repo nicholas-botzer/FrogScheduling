@@ -5,6 +5,9 @@ from simso.core import Scheduler
 from simso.schedulers import scheduler
 
 class FrogScheduler(Scheduler):
+
+    def init(self):
+        pass
     
     def on_activate(self, job):
         pass
@@ -18,6 +21,25 @@ class FrogScheduler(Scheduler):
                       if t.is_active() and not t.job.is_running()]
 
         if ready_jobs:
+
+            #get priority list of jobs waiting to run
+            #determine the job with the highest priority
+
+            freeProcessor =  getFreeProcessor()
+
+            #We have a free processor so schedule a task to it
+            if(freeProcessor):
+                pass #schedule the highest priority task to the free processor
+            else:
+                #get priority list of tasks and processors they are on
+
+                #determine the lowest priority task and processor combination
+
+                #if the slected job has a higher priority than the lowest priorty task/processor combo kick it off
+                #otherwise let it continue to run
+
+
+
             # Select a free processor or, if none,
             # the one with the greatest deadline (self in case of equality):
             key = lambda x: (
@@ -35,6 +57,13 @@ class FrogScheduler(Scheduler):
                     cpu_min.running.absolute_deadline > job.absolute_deadline):
                 print(self.sim.now(), job.name, cpu_min.name)
                 return (job, cpu_min)
+
+
+    def getFreeProcessor(self):
+        for processor in self.processors
+            if not processor.running
+                return processor
+    
 
     def initializeTaskToPriorityDict(self, taskToPriorityDict):
         self.taskToPriorityDict = taskToPriorityDict

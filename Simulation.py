@@ -14,15 +14,18 @@ def main(argv):
     # Init a model from the configuration.
     model = Model(configuration)
 
+    #initial population
     geneticAlgorithm = GeneticAlgorithm(model.task_list)
 
     #Run genetic algorithm
     for x in range(0,20):
         for chromosome in geneticAlgorithm.chromosomeList:
-            # Execute the simulation.
+            #set chromosome for model to use
             model.scheduler.initializeTaskToPriorityDict(chromosome.taskToPriorityDict)
+            # Execute the simulation.
             model.run_model()
 
+            #evaluate fitness
             chromosome.evaluate_fitness(model)
 
         #Perform the selection, crossover, and mutation 
