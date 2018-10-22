@@ -25,12 +25,13 @@ class FrogScheduler(Scheduler):
             #get priority list of jobs waiting to run
             #determine the job with the highest priority
 
-            freeProcessor =  getFreeProcessor()
+            freeProcessor =  self.getFreeProcessor()
 
             #We have a free processor so schedule a task to it
             if(freeProcessor):
                 pass #schedule the highest priority task to the free processor
             else:
+                pass
                 #get priority list of tasks and processors they are on
 
                 #determine the lowest priority task and processor combination
@@ -60,8 +61,8 @@ class FrogScheduler(Scheduler):
 
 
     def getFreeProcessor(self):
-        for processor in self.processors
-            if not processor.running
+        for processor in self.processors:
+            if not processor.running:
                 return processor
     
 
