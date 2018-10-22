@@ -16,14 +16,21 @@ class FrogScheduler(Scheduler):
         job.cpu.resched()
 
     def schedule(self, cpu):
-         # List of ready jobs not currently running:
+        # List of ready jobs not currently running:
         ready_jobs = [t.job for t in self.task_list
-                      if t.is_active() and not t.job.is_running()]
+            if t.is_active() and not t.job.is_running()]
 
         if ready_jobs:
-
-            #get priority list of jobs waiting to run
+            
             #determine the job with the highest priority
+            priorList = [] # contains tuples (task Prior, job deadline, job)
+            for job in ready_jobs:
+                priorList.append((getTaskPriority(task),
+                                  1.0/job._absolute_deadline,
+                                  job))
+            highestPriorJob = max(priorList)[0,2] # (priority, job)
+
+            highestPriorityJob = max
 
             freeProcessor =  self.getFreeProcessor()
 
@@ -68,3 +75,6 @@ class FrogScheduler(Scheduler):
 
     def initializeChromosome(self, chromosome):
         self.chromosome = chromosome
+
+    def getTaskPriority(self, task):
+        return self.chromosome.taskToPriorityDict[task]
