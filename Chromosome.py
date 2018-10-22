@@ -1,4 +1,4 @@
-class Chromosome(Object):
+class Chromosome:
 
     def __init__(self):
         self.taskToPriorityDict = {}
