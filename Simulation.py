@@ -14,9 +14,6 @@ def main(argv):
     # Init a model from the configuration.
     model = Model(configuration)
 
-    # Execute the simulation.
-    model.run_model()
-
     geneticAlgorithm = GeneticAlgorithm(model.task_list)
 
     #Run genetic algorithm
