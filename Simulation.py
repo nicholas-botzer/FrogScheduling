@@ -23,7 +23,7 @@ def main(argv):
     for x in range(0,20):
         for chromosome in geneticAlgorithm.chromosomeList:
             # Execute the simulation.
-            model.scheduler.initalizePriorityQueue(chromosome.taskToPriorityDict)
+            model.scheduler.initializeTaskToPriorityDict(chromosome.taskToPriorityDict)
             model.run_model()
 
             chromosome.evaluate_fitness(model)

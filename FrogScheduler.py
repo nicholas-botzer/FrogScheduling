@@ -15,5 +15,5 @@ class FrogScheduler(Scheduler):
     def schedule(self, cpu):
         pass
 
-    def initalizePriorityQueue(self, priorityQueue):
-        self.priorityQueue = priorityQueue
+    def initializeTaskToPriorityDict(self, taskToPriorityDict):
+        self.taskToPriorityDict = taskToPriorityDict
