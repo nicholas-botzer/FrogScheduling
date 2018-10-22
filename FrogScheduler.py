@@ -32,9 +32,10 @@ class FrogScheduler(Scheduler):
                 pass #schedule the highest priority task to the free processor
             else:
                 pass
-                #get priority list of tasks and processors they are on
-
+                #get the list of processors and the priority of the tasks associated
                 #determine the lowest priority task and processor combination
+
+                processor, processorPriority = self.getLowestPriorityProcessorTaskCombination()
 
                 #if the slected job has a higher priority than the lowest priorty task/processor combo kick it off
                 #otherwise let it continue to run
@@ -65,6 +66,21 @@ class FrogScheduler(Scheduler):
             if not processor.running:
                 return processor
     
+    def getLowestPriorityProcessorTaskCombination(self):
+
+        lowestPriority = 0
+        lowestPriorityProcessor = None
+        for processor in self.processors:
+            if processor.running:
+                processorTask = processor.running.task
+                taskPriority = self.chromosome.taskToPriorityDict[processorTask]
+
+                if(taskPriority < lowestPriority):
+                    lowestPriority = taskPriority
+                    lowestPriorityProcessor = processor
+
+        return lowestPriorityProcessor, lowestPriority
+
 
     def initializeChromosome(self, chromosome):
         self.chromosome = chromosome
