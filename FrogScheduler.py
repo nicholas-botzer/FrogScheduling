@@ -10,10 +10,10 @@ class FrogScheduler(Scheduler):
         pass
     
     def on_activate(self, job):
-        pass
+        job.cpu.resched()
 
     def on_terminated(self, job):
-        pass
+        job.cpu.resched()
 
     def schedule(self, cpu):
          # List of ready jobs not currently running:
