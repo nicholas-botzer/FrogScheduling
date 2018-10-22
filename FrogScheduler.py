@@ -25,20 +25,17 @@ class FrogScheduler(Scheduler):
             #determine the job with the highest priority
             priorList = [] # contains tuples (task Prior, job deadline, job)
             for job in ready_jobs:
-                priorList.append((getTaskPriority(task),
+                priorList.append((self.getTaskPriority(job.task),
                                   1.0/job._absolute_deadline,
                                   job))
             highestPriorJob = max(priorList)[0,2] # (priority, job)
-
-            highestPriorityJob = max
 
             freeProcessor =  self.getFreeProcessor()
 
             #We have a free processor so schedule a task to it
             if(freeProcessor):
-                pass #schedule the highest priority task to the free processor
+                return (highestPriorJob[1], freeProcessor)   #schedule the highest priority task to the free processor
             else:
-                pass
                 #get the list of processors and the priority of the tasks associated
                 #determine the lowest priority task and processor combination
 
@@ -47,25 +44,8 @@ class FrogScheduler(Scheduler):
                 #if the slected job has a higher priority than the lowest priorty task/processor combo kick it off
                 #otherwise let it continue to run
 
-
-
-            # Select a free processor or, if none,
-            # the one with the greatest deadline (self in case of equality):
-            key = lambda x: (
-                1 if not x.running else 0,
-                x.running.absolute_deadline if x.running else 0,
-                1 if x is cpu else 0
-            )
-
-            cpu_min = max(self.processors, key=key)
-
-            # Select the job with the least priority:
-            job = min(ready_jobs, key=lambda x: x.absolute_deadline)
-
-            if (cpu_min.running is None or
-                    cpu_min.running.absolute_deadline > job.absolute_deadline):
-                print(self.sim.now(), job.name, cpu_min.name)
-                return (job, cpu_min)
+                if(highestPriorJob[0] > processorPriority):
+                    return (highestPriorJob[1], processor)
 
 
     def getFreeProcessor(self):
@@ -80,7 +60,7 @@ class FrogScheduler(Scheduler):
         for processor in self.processors:
             if processor.running:
                 processorTask = processor.running.task
-                taskPriority = self.chromosome.taskToPriorityDict[processorTask]
+                taskPriority = self.getTaskPriority(processorTask)
 
                 if(taskPriority < lowestPriority):
                     lowestPriority = taskPriority
