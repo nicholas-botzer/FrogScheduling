@@ -3,7 +3,7 @@ from Chromosome import Chromosome
 from ChromosomeTask import ChromosomeTask
 from Crossovers import Crossovers
 
-class GeneticAlgorithm():
+class GeneticAlgorithm(Object):
 
     def __init__(self, taskList, numberOfChromosomes=10, crossoverTechnique=None):
         self.chromosomeList = []
