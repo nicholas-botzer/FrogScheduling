@@ -21,7 +21,7 @@ def main(argv):
     for x in range(0,20):
         for chromosome in geneticAlgorithm.chromosomeList:
             #set chromosome for model to use
-            model.scheduler.initializeTaskToPriorityDict(chromosome.taskToPriorityDict)
+            model.scheduler.initializeChromosome(chromosome)
             # Execute the simulation.
             model.run_model()
 
