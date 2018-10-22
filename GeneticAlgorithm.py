@@ -24,8 +24,7 @@ class GeneticAlgorithm():
             random.shuffle(taskList)
             priority = 0
             for task in taskList:
-                chromosomeTask = ChromosomeTask(task.name, task.deadline, task._task_info.activation_date, task.wcet)
-                chromosome.insert_task(chromosomeTask, priority)
+                chromosome.insert_task(task, priority)
                 priority += 1
         
             self.chromosomeList.append(chromosome)
