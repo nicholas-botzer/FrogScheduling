@@ -66,5 +66,5 @@ class FrogScheduler(Scheduler):
                 return processor
     
 
-    def initializeTaskToPriorityDict(self, taskToPriorityDict):
-        self.taskToPriorityDict = taskToPriorityDict
+    def initializeChromosome(self, chromosome):
+        self.chromosome = chromosome
