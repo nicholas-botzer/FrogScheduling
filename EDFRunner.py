@@ -5,6 +5,7 @@ from Results import Results
 
 
 def main(argv):
+    argv = [0,"./ConfigurationFiles/EDF_baseTest.xml"]
     if len(argv) == 2:
         # Configuration load from a file.
         configuration = Configuration(argv[1])
