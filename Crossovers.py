@@ -53,7 +53,7 @@ class Crossovers(object):
         for t in taskList:
             if t == None:
                 continue
-            if task.name == t.name:
+            if task == t:
                 return True
         return False
 

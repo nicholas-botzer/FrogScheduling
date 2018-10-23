@@ -49,14 +49,20 @@ class GeneticAlgorithm:
             - Chromosome selected to continue living it's life
     '''
     def roulette_wheel_selection(self):
-        max = sum(chromosome.fitnessScore for chromosome in self.chromosomeList)
+
+        highestFitnessScore = max(self.chromosomeList, key = lambda x: (x.fitnessScore)).fitnessScore
+
+        for chromosome in self.chromosomeList:
+            chromosome.fitnessScore = highestFitnessScore - (chromosome.fitnessScore)
+
+        maximum = sum(chromosome.fitnessScore for chromosome in self.chromosomeList)
     
-        pick = random.uniform(0, max)
+        pick = random.uniform(0, maximum)
         current = 0
         for chromosome in self.chromosomeList:
             current += chromosome.fitnessScore
-        if current > pick:
-            return chromosome
+            if current > pick:
+                return chromosome
 
     '''
     Args
@@ -68,7 +74,7 @@ class GeneticAlgorithm:
     def crossover(self, parentChromosomesList, numberOfChildrenDesired=0):
 
         newChromosomesList = []
-        for x in range(0,numberOfChildrenDesired-1):
+        for x in range(0,numberOfChildrenDesired):
             parentOneIndex = random.randint(0, len(parentChromosomesList)-1)
             parentTwoIndex = random.randint(0, len(parentChromosomesList)-1)
 

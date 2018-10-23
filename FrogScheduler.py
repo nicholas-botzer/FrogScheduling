@@ -74,4 +74,4 @@ class FrogScheduler(Scheduler):
         self.chromosome = chromosome
 
     def getTaskPriority(self, task):
-        return self.chromosome.taskToPriorityDict[task]
+        return self.chromosome.taskToPriorityDict[task.name]

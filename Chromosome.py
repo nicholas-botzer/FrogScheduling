@@ -5,11 +5,11 @@ class Chromosome:
         self.fitnessScore = 0
 
     def insert_task(self, task,priority):
-        self.taskToPriorityDict[task] = priority
+        self.taskToPriorityDict[task.name] = priority
 
     def update_task(self, task, priority):
         if(task in self.taskToPriorityDict):
-            self.taskToPriorityDict[task] = priority
+            self.taskToPriorityDict[task.name] = priority
 
 
     '''
@@ -23,6 +23,8 @@ class Chromosome:
     def evaluate_fitness(self, model):
 
         self.fitnessScore = model.results.total_exceeded_count
+        # print(str(self.fitnessScore))
+        self.model = model
 
     def getAverageNormalizedLaxity(self, model):
         count = 0
