@@ -2,6 +2,20 @@ import sys
 from simso.core import Model
 from simso.configuration import Configuration
 from GeneticAlgorithm import GeneticAlgorithm
+from Results import Results
+
+def chooseOptimalChromosome(chromosomeList):
+    bestFitnessScore = 9999999
+    bestChromosome = None
+    for chromosome in chromosomeList:
+        fitnessScore = chromosome.fitnessScore
+
+        if(fitnessScore < bestFitnessScore):
+            bestFitnessScore = fitnessScore
+            bestChromosome = chromosome
+
+    return bestChromosome
+
 
 def main(argv):
     argv = [0,"./ConfigurationFiles/config_2_20_0.xml"]
@@ -22,19 +36,23 @@ def main(argv):
     geneticAlgorithm = GeneticAlgorithm(model.task_list)
 
     #Run genetic algorithm
-    for x in range(0,20):
+    for x in range(0,10):
         for chromosome in geneticAlgorithm.chromosomeList:
+            model = Model(configuration)
             #set chromosome for model to use
             model.scheduler.initializeChromosome(chromosome)
             # Execute the simulation.
             model.run_model()
-            print("Do I run once?")
             #evaluate fitness
             chromosome.evaluate_fitness(model)
 
+        # on last run DO NOT DO THE BELOW OPERATIONS
+        bestChromosome = chooseOptimalChromosome(geneticAlgorithm.chromosomeList)
+        print("Best fitness Score: " , str(bestChromosome.fitnessScore))
+        
         #Perform the selection, crossover, and mutation 
-        nextChromosomeGenerationList = geneticAlgorithm.selection(8)
-        childChromosomeList = geneticAlgorithm.crossover(nextChromosomeGenerationList, 4)
+        nextChromosomeGenerationList = geneticAlgorithm.selection(6)
+        childChromosomeList = geneticAlgorithm.crossover(nextChromosomeGenerationList, 2) #returns 4
 
         # print(childChromosomeList)
         nextChromosomeGenerationList.extend(childChromosomeList)
@@ -45,6 +63,8 @@ def main(argv):
         #mutate the generation before running again
         geneticAlgorithm.mutate()
 
+
+    Results(bestChromosome.model).print_results()
 
 
 main(sys.argv)
