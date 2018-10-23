@@ -24,7 +24,7 @@ def main(argv):
             model.scheduler.initializeChromosome(chromosome)
             # Execute the simulation.
             model.run_model()
-
+            print("Do I run once?")
             #evaluate fitness
             chromosome.evaluate_fitness(model)
 

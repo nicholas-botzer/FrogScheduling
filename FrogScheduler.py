@@ -16,7 +16,7 @@ class FrogScheduler(Scheduler):
         job.cpu.resched()
 
     def schedule(self, cpu):
-        # List of ready jobs not currently running:
+        # # List of ready jobs not currently running:
         ready_jobs = [t.job for t in self.task_list
             if t.is_active() and not t.job.is_running()]
 
@@ -37,13 +37,13 @@ class FrogScheduler(Scheduler):
             if(freeProcessor):
                 return (highestPriorJob[1], freeProcessor)   #schedule the highest priority task to the free processor
             else:
-                #get the list of processors and the priority of the tasks associated
-                #determine the lowest priority task and processor combination
+        #         #get the list of processors and the priority of the tasks associated
+        #         #determine the lowest priority task and processor combination
 
                 processor, processorPriority = self.getLowestPriorityProcessorTaskCombination()
 
-                #if the slected job has a higher priority than the lowest priorty task/processor combo kick it off
-                #otherwise let it continue to run
+        #         #if the slected job has a higher priority than the lowest priorty task/processor combo kick it off
+        #         #otherwise let it continue to run
 
                 if(highestPriorJob[0] > processorPriority):
                     return (highestPriorJob[1], processor)
@@ -63,7 +63,7 @@ class FrogScheduler(Scheduler):
                 processorTask = processor.running.task
                 taskPriority = self.getTaskPriority(processorTask)
 
-                if(taskPriority < lowestPriority):
+                if(taskPriority > lowestPriority):
                     lowestPriority = taskPriority
                     lowestPriorityProcessor = processor
 
