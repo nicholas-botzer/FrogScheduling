@@ -4,24 +4,12 @@ from simso.core import Model
 from simso.configuration import Configuration
 from GeneticAlgorithm import GeneticAlgorithm
 from Crossovers import Crossovers
-from Debug import Debug
 from Results import Results
+from Debug import Debug
 
-def chooseOptimalChromosome(chromosomeList):
-    bestFitnessScore = 9999999
-    bestChromosome = None
-    for chromosome in chromosomeList:
-        fitnessScore = chromosome.fitnessScore
-
-        if(fitnessScore < bestFitnessScore):
-            bestFitnessScore = fitnessScore
-            bestChromosome = chromosome
-
-    return bestChromosome
 
 def main(argv):
-    argv = [0,"./ConfigurationFiles/initialTest.xml"]
-
+    argv = [0,"./ConfigurationFiles/FS_baseTest.xml"]
     configuration = None
     if len(argv) == 2:
         # Configuration load from a file.
@@ -38,29 +26,25 @@ def main(argv):
     #initial population
     geneticAlgorithm = GeneticAlgorithm(model.task_list,shuffleTaskPriority=False)
 
-
     #Run genetic algorithm
-    for x in range(0,10):
+    for x in range(0,20):
         for chromosome in geneticAlgorithm.chromosomeList:
-            model = Model(configuration)
             #set chromosome for model to use
             model.scheduler.initializeChromosome(chromosome)
             # Execute the simulation.
             logging.debug(Debug.getTaskListStr(chromosome.taskToPriorityDict,
                                      name='Chromosome Task Priorities'))
             model.run_model()
-            sys.exit(0)
 
+            Debug.printGanttPerCPU(model.scheduler.ganttData)
+            Results(model).print_results()
+            sys.exit(0)
             #evaluate fitness
             chromosome.evaluate_fitness(model)
 
-        # on last run DO NOT DO THE BELOW OPERATIONS
-        bestChromosome = chooseOptimalChromosome(geneticAlgorithm.chromosomeList)
-        print("Best fitness Score: " , str(bestChromosome.fitnessScore))
-
         #Perform the selection, crossover, and mutation 
-        nextChromosomeGenerationList = geneticAlgorithm.selection(30)
-        childChromosomeList = geneticAlgorithm.crossover(nextChromosomeGenerationList, 5) #returns 4
+        nextChromosomeGenerationList = geneticAlgorithm.selection(8)
+        childChromosomeList = geneticAlgorithm.crossover(nextChromosomeGenerationList, 4)
 
         # print(childChromosomeList)
         nextChromosomeGenerationList.extend(childChromosomeList)
@@ -72,7 +56,5 @@ def main(argv):
         geneticAlgorithm.mutate()
 
 
-    Results(bestChromosome.model).print_results()
-
-
-main(sys.argv)
+if __name__ == '__main__':
+    main(sys.argv)

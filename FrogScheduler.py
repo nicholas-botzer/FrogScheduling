@@ -2,14 +2,16 @@
 Implementation of the Frog Scheduling genetic algorithm
 """
 import sys, logging
+from collections import defaultdict
 from simso.core import Scheduler
 from simso.schedulers import scheduler
 from Crossovers import Crossovers
 
+
 class FrogScheduler(Scheduler):
 
     def init(self):
-        pass
+        self.ganttData = defaultdict(list)
     
     def on_activate(self, job):
         logging.debug('[A] - JOB ACTIVATED. Job:{} (Time: {}) '.format(
@@ -17,8 +19,11 @@ class FrogScheduler(Scheduler):
         job.cpu.resched()
 
     def on_terminated(self, job):
-        logging.debug('[T] - JOB TERMINATED. Job:{} (Time: {}) '.format(
-            job.name,self.sim.now()))
+        logging.debug('[T] - JOB TERMINATED. Job:{} CPU:{} (Time: {}) '.format(
+            job.name,job.cpu.name,self.sim.now()))
+        #print self.ganttData[job.cpu.name]
+        self.ganttData[job.cpu.name].append('Terminated job {} (Time: {})'.format(
+            job.name,self.sim.now())) 
         job.cpu.resched()
 
     def schedule(self, cpu):
@@ -46,7 +51,13 @@ class FrogScheduler(Scheduler):
             #We have a free processor so schedule a task to it
             if(freeProcessor):
                 logging.debug('       -> Scheduled job {} to cpu {}'.format( 
-                        highestPriorJob[1].name,freeProcessor.name))
+                    highestPriorJob[1].name,freeProcessor.name))
+                if freeProcessor.name not in self.ganttData:
+                    #print '{} not in'.format(freeProcessor.name)
+                    self.ganttData[freeProcessor.name] = []
+                self.ganttData[freeProcessor.name].append('Added job {} (Time: {})'.format(
+                    highestPriorJob[1].name,self.sim.now())) 
+                #print self.ganttData[freeProcessor.name]
                 return (highestPriorJob[1], freeProcessor)   #schedule the highest priority task to the free processor
             else:
         #         #get the list of processors and the priority of the tasks associated
@@ -60,6 +71,11 @@ class FrogScheduler(Scheduler):
                 if(highestPriorJob[0] > processorPriority):
                     logging.debug('       -> Scheduled job {} to cpu {}'.format( 
                         highestPriorJob[1].name,processor.name))
+                    if processor.name not in self.ganttData:
+                        #print '{} not in'.format(processor.name)
+                        self.ganttData[processor.name] = []
+                    self.ganttData[processor.name].append('Added job {} (Time: {})'.format(
+                        highestPriorJob[1].name,self.sim.now())) 
                     return (highestPriorJob[1], processor)
 
 

@@ -1,5 +1,7 @@
-class Debug:
+from __future__ import print_function
 
+class Debug:
+    
 ### Helper String/Print Statements
     @staticmethod
     def getTaskListStr(dic, name='TaskList'):
@@ -20,6 +22,15 @@ class Debug:
         retStr = 'Task Name: {}, Deadline: {}'.format(
             task.name, task._absolute_deadline)
         return retStr
+        
+    @staticmethod
+    def printGanttPerCPU(ganttDictData):
+        cpuList = sorted(list(ganttDictData))
+        for cpu in cpuList:
+            print('\n Printing {} Gantt Data:'.format(cpu))
+            for event in ganttDictData[cpu]:
+                print(event + ' | ' , end='')
+            print('|')
         
 
 
