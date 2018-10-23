@@ -4,9 +4,12 @@ from simso.configuration import Configuration
 from GeneticAlgorithm import GeneticAlgorithm
 
 def main(argv):
+    configuration = None
     if len(argv) == 2:
         # Configuration load from a file.
         configuration = Configuration(argv[1])
+    else:
+        raise ValueError('invalid number of args')
 
     # Check the config before trying to run it.
     configuration.check_all()
