@@ -56,19 +56,6 @@ class Crossovers(object):
             if task.name == t.name:
                 return True
         return False
-    
-    @staticmethod
-    def printTaskList(dic, name='TaskList'):
-        retStr = ''
-        dicList = []
-        for (k1,v1) in dic.items():
-            dicList.append((k1.name,v1))
-        retStr += ('\n - - - - - - - - - - - - - - - -\n')
-        retStr += ('{}\n'.format(name))
-        for e in sorted(dicList, key=lambda x: x[1]):
-            retStr += ('Priority: {}, Task: {}\n'.format(e[1],e[0]))
-        retStr += ('- - - - - - - - - - - - - - - -\n\n')
-        return retStr
 
 
 ####### CROSSOVER IMPLEMENTATIONS #######
