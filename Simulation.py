@@ -21,6 +21,7 @@ def chooseOptimalChromosome(chromosomeList):
 
 def main(argv):
     argv = [0,"./ConfigurationFiles/initialTest.xml"]
+
     configuration = None
     if len(argv) == 2:
         # Configuration load from a file.
@@ -35,7 +36,8 @@ def main(argv):
     model = Model(configuration)
 
     #initial population
-    geneticAlgorithm = GeneticAlgorithm(model.task_list,shuffleTaskPriority=)
+    geneticAlgorithm = GeneticAlgorithm(model.task_list,shuffleTaskPriority=False)
+
 
     #Run genetic algorithm
     for x in range(0,10):
@@ -55,10 +57,10 @@ def main(argv):
         # on last run DO NOT DO THE BELOW OPERATIONS
         bestChromosome = chooseOptimalChromosome(geneticAlgorithm.chromosomeList)
         print("Best fitness Score: " , str(bestChromosome.fitnessScore))
-        
+
         #Perform the selection, crossover, and mutation 
-        nextChromosomeGenerationList = geneticAlgorithm.selection(6)
-        childChromosomeList = geneticAlgorithm.crossover(nextChromosomeGenerationList, 2) #returns 4
+        nextChromosomeGenerationList = geneticAlgorithm.selection(30)
+        childChromosomeList = geneticAlgorithm.crossover(nextChromosomeGenerationList, 5) #returns 4
 
         # print(childChromosomeList)
         nextChromosomeGenerationList.extend(childChromosomeList)
