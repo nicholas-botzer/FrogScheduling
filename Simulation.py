@@ -18,7 +18,7 @@ def chooseOptimalChromosome(chromosomeList):
 
 
 def main(argv):
-    argv = [0,"./ConfigurationFiles/config_2_20_0.xml"]
+    argv = [0,"./ConfigurationFiles/initialTest.xml"
     configuration = None
     if len(argv) == 2:
         # Configuration load from a file.
