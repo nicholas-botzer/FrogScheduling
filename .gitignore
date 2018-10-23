@@ -175,3 +175,7 @@ dmypy.json
     About
 
 Press h to open a hovercard with more details.
+
+# Custom
+ConfigurationFiles/
+ConfigurationFiles/config_2_20_0.xml
