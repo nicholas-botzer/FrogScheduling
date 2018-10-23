@@ -1,10 +1,13 @@
-import sys
+import sys, logging
+logging.basicConfig(format='%(message)s',stream=sys.stderr, level=logging.DEBUG)
 from simso.core import Model
 from simso.configuration import Configuration
 from GeneticAlgorithm import GeneticAlgorithm
+from Crossovers import Crossovers
+from Debug import Debug
 
 def main(argv):
-    argv = [0,"./ConfigurationFiles/initialTest.xml"
+    argv = [0,"./ConfigurationFiles/initialTest.xml"]
     configuration = None
     if len(argv) == 2:
         # Configuration load from a file.
@@ -19,7 +22,7 @@ def main(argv):
     model = Model(configuration)
 
     #initial population
-    geneticAlgorithm = GeneticAlgorithm(model.task_list)
+    geneticAlgorithm = GeneticAlgorithm(model.task_list,shuffleTaskPriority=)
 
     #Run genetic algorithm
     for x in range(0,20):
@@ -27,8 +30,10 @@ def main(argv):
             #set chromosome for model to use
             model.scheduler.initializeChromosome(chromosome)
             # Execute the simulation.
+            logging.debug(Debug.getTaskListStr(chromosome.taskToPriorityDict,
+                                     name='Chromosome Task Priorities'))
             model.run_model()
-            print("Do I run once?")
+            sys.exit(0)
             #evaluate fitness
             chromosome.evaluate_fitness(model)
 

@@ -34,3 +34,5 @@ class Chromosome:
                     count += 1
 
         return totalNormalizedLaxity / count
+
+        

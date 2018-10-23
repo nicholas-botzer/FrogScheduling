@@ -5,10 +5,11 @@ from Crossovers import Crossovers
 
 class GeneticAlgorithm:
 
-    def __init__(self, taskList, numberOfChromosomes=10, crossoverTechnique=None):
+    def __init__(self, taskList, numberOfChromosomes=10, 
+        crossoverTechnique=None, shuffleTaskPriority=True):
         self.chromosomeList = []
         self.numberOfChromosomes = numberOfChromosomes
-        self.initial_population(taskList)
+        self.initial_population(taskList,shuffleTaskPriority)
 
     '''
         Initializes the chromosome's for the GA
@@ -18,10 +19,11 @@ class GeneticAlgorithm:
             - Nothing, just creates the initial population for the class
 
     '''
-    def initial_population(self, taskList):
+    def initial_population(self, taskList, shuffle=True):
         for x in range(0, self.numberOfChromosomes):
             chromosome = Chromosome()
-            random.shuffle(taskList)
+            if shuffle:
+                random.shuffle(taskList)
             priority = 0
             for task in taskList:
                 chromosome.insert_task(task, priority)
