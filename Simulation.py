@@ -4,6 +4,7 @@ from simso.configuration import Configuration
 from GeneticAlgorithm import GeneticAlgorithm
 
 def main(argv):
+    argv = [0,"./ConfigurationFiles/config_2_20_0.xml"]
     configuration = None
     if len(argv) == 2:
         # Configuration load from a file.

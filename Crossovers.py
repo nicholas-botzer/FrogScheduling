@@ -74,8 +74,10 @@ class Crossovers(object):
     ### Verification
         if not isinstance(taskDict1, dict): raise ValueError('Dict 1 not a dict!')
         if not isinstance(taskDict2, dict): raise ValueError('Dict 2 not a dict!')
-        if not isinstance(partition1, int) or not isinstance(partition2, int): 
-            raise ValueError('Partition1 or Partition2 is not an int!')
+        if partition1 != None and not isinstance(partition1, int): 
+            raise ValueError('Partition1 is not an int!')
+        if partition2 != None AND not isinstance(partition2, int):
+            raise ValueError('Partition2 is not an int!') 
         if len(taskDict1) != len(taskDict2):
             raise ValueError('Dictionary sizes don\'t match!')
         if partition1 and ( partition1 < 0 or partition1 > len(taskDict1)+1 ):
