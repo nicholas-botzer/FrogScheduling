@@ -20,13 +20,12 @@ def chooseOptimalChromosome(chromosomeList):
 
     return bestChromosome
 
-def main(argv):
+def main(args):
     configuration = None
-    if len(argv) == 2:
-        # Configuration load from a file.
-        configuration = Configuration(argv[1])
-    else:
-        raise ValueError('invalid number of args')
+    print(args)
+    # Configuration load from a file.
+    configuration = Configuration(args.config)
+    
 
     # Check the config before trying to run it.
     configuration.check_all()
@@ -35,14 +34,15 @@ def main(argv):
     model = Model(configuration)
 
     #initial population
-    geneticAlgorithm = GeneticAlgorithm(model.task_list,30, shuffleTaskPriority=True)
+    geneticAlgorithm = GeneticAlgorithm(model.task_list,args.numChrom, shuffleTaskPriority=True,
+        elitePercent=args.ESCperc[0], selectionPercent=args.ESCperc[1] ,crossOverPercent=args.ESCperc[2], mutationRate=args.mutRate )
 
     results = Results()
 
     optimalChromosome = Chromosome()
 
     #Run genetic algorithm
-    for x in range(0,20):
+    for x in range(0,args.numGen):
         for chromosome in geneticAlgorithm.chromosomeList:
             #set chromosome for model to use
             model = Model(configuration)
@@ -83,7 +83,7 @@ def main(argv):
         geneticAlgorithm.mutate()
 
     results.setOptimalChromosome(optimalChromosome)
-    results.createOutputFile("testOutput.csv","testConfig","testSched",optimalChromosome.model)
+    results.createOutputFile(args.resultFN,args.config,args.simulator,optimalChromosome.model)
     results.print_results(optimalChromosome.model)
 
 

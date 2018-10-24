@@ -23,8 +23,8 @@ parser.add_argument('--numChrom', metavar='N',
                     type=int,default=30)
 parser.add_argument('--ESCperc','-ESC', metavar='N',
                     help='Specify the elite, selection, crossover ratio in ' \
-                    'percents. (MUST sum to 100)', 
-                    nargs=3,type=int,default=[10,50,40])
+                    'percents. (MUST sum to 1.0)', 
+                    nargs=3,type=float,default=[0.10,0.50,0.40])
 parser.add_argument('--mutRate', '-mr', metavar='R',
                     help='Specify the starting mutation rate',
                     type=float,default=1.5)
@@ -39,9 +39,9 @@ args = parser.parse_args()
 # Check ESC, mutRate, numGen, numChrom
 tot = 0
 for num in args.ESCperc:
-    assert num >= 0 and num <= 100, 'ESC entry invalid.'
+    assert num >= 0 and num <= 1.0, 'ESC entry invalid.'
     tot += num
-assert tot==100, 'ESC must sum to 100'
+assert tot==1.0, 'ESC must sum to 1.0'
 assert args.mutRate > 0, 'Mutation rate (%.2f) invalid'%args.mutRate
 assert args.numChrom > 0, 'Number of chromosomes (%d) invalid'%args.numGen
 assert args.numGen > 0, 'Number of generations (%d) invalid'%args.numGen
@@ -73,4 +73,4 @@ assert args.numGen > 0, 'Number of generations (%d) invalid'%args.numGen
 # config_dir = os.path.join(curr_dir+'/ConfigurationFiles',config_fn)
 # edf_simulator.main([0,config_dir])
 
-main([0,"ConfigurationFiles\config_2_20_0.xml"])
+main(args)
