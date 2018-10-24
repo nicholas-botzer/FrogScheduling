@@ -22,8 +22,7 @@ class Chromosome:
     '''
     def evaluate_fitness(self, model):
 
-        self.fitnessScore = model.results.total_exceeded_count
-        # print(str(self.fitnessScore))
+        self.fitnessScore = (model.results.total_exceeded_count * 20) + model.results.total_preemptions
         self.model = model
 
     def getAverageNormalizedLaxity(self, model):
