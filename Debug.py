@@ -13,7 +13,7 @@ class Debug:
         retStr += ('{}\n'.format(name))
         for e in sorted(dicList, key=lambda x: x[1]):
             retStr += ('Priority: {}, TaskInfo - {}\n'.format(e[1],
-                            e[0].name))
+                            e[0]))
         retStr += ('- - - - - - - - - - - - - - - -\n\n')
         return retStr
 
