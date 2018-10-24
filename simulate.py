@@ -3,7 +3,7 @@ from os import listdir
 from os.path import abspath, dirname, isfile, join
 import xml.etree.ElementTree
 
-from simulators import *
+from simulators.ga_simulator import main
 
 
 ### Parse and Check Arguments
@@ -52,23 +52,25 @@ assert args.numGen > 0, 'Number of generations (%d) invalid'%args.numGen
 
 
 
-### Config File: Add similator to XML and grab file
-xmlFilePath = os.path.join(curr_dir+'/ConfigurationFiles',args.config)
-xmlFile = xml.etree.ElementTree.parse(xmlFilePath)
+# ### Config File: Add similator to XML and grab file
+# xmlFilePath = os.path.join(curr_dir+'/ConfigurationFiles',args.config)
+# xmlFile = xml.etree.ElementTree.parse(xmlFilePath)
 
 
-# Append new tag: <a x='1' y='abc'>body text</a>
-new_tag = xml.etree.ElementTree.SubElement(et.getroot(), 'a')
-new_tag.text = 'body text'
-new_tag.attrib['x'] = '1' # must be str; cannot be an int
-new_tag.attrib['y'] = 'abc'
+# # Append new tag: <a x='1' y='abc'>body text</a>
+# new_tag = xml.etree.ElementTree.SubElement(et.getroot(), 'a')
+# new_tag.text = 'body text'
+# new_tag.attrib['x'] = '1' # must be str; cannot be an int
+# new_tag.attrib['y'] = 'abc'
 
-# Write back to file
-#et.write('file.xml')
-et.write('file_new.xml')
+# # Write back to file
+# #et.write('file.xml')
+# et.write('file_new.xml')
 
-#print sys.modules
-config_fn = 'EDF_periodicTest.xml'
-curr_dir = dirname(abspath(__file__))
-config_dir = os.path.join(curr_dir+'/ConfigurationFiles',config_fn)
-edf_simulator.main([0,config_dir])
+# #print sys.modules
+# config_fn = 'EDF_periodicTest.xml'
+# curr_dir = dirname(abspath(__file__))
+# config_dir = os.path.join(curr_dir+'/ConfigurationFiles',config_fn)
+# edf_simulator.main([0,config_dir])
+
+main([0,"ConfigurationFiles\config_2_20_0.xml"])
