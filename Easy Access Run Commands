@@ -1,0 +1,18 @@
+Positional Arguments
+    [1] Simulator Module
+    [2] Configuration File Name
+Optional Arguments
+    --numGen 20
+    --numChrom 30
+    --ESCperc, -ESC (Elite, Selection, Crossover Percent) 10 50 40
+        Help: All 3 must add up 100
+    --mutRate, -mr 1.5
+        Help: <2
+    --resultsFN results
+    --log, -l
+
+
+CMDL for FROG
+
+python3 simulate.py ga_simulator FROG_baseTest.xml --numGen 20 --numChrom 30 -ESC 10 50 40 --mutRate 1.5 --resultsFN frogbase_results.txt -l
+==============================================================
