@@ -25,15 +25,4 @@ class Chromosome:
         self.fitnessScore = (model.results.total_exceeded_count * 20) + model.results.total_preemptions
         self.model = model
 
-    def getAverageNormalizedLaxity(self, model):
-        count = 0
-        totalNormalizedLaxity = 0
-        for task in model.results.tasks.values():
-            for job in task.jobs:
-                if(job.task.deadline and job.response_time):
-                    totalNormalizedLaxity += job.normalized_laxity
-                    count += 1
-
-        return totalNormalizedLaxity / count
-
         

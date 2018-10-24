@@ -6,6 +6,7 @@ from GeneticAlgorithm import GeneticAlgorithm
 from Crossovers import Crossovers
 from Results import Results
 from Debug import Debug
+from Chromosome import Chromosome
 
 def chooseOptimalChromosome(chromosomeList):
     bestFitnessScore = 9999999
@@ -37,29 +38,39 @@ def main(argv):
     #initial population
     geneticAlgorithm = GeneticAlgorithm(model.task_list,30, shuffleTaskPriority=True)
 
+    results = Results()
+
+    optimalChromosome = Chromosome()
+
     #Run genetic algorithm
-    for x in range(0,20):
+    for x in range(0,4):
         for chromosome in geneticAlgorithm.chromosomeList:
             #set chromosome for model to use
             model = Model(configuration)
             model.scheduler.initializeChromosome(chromosome)
-            # # Execute the simulation.
+            # Execute the simulation.
             logging.debug(Debug.getTaskListStr(chromosome.taskToPriorityDict,
                                      name='Chromosome Task Priorities'))
             model.run_model()
-
-            # Debug.printGanttPerCPU(model.scheduler.ganttData)
-            # Results(model).print_results()
             
             #evaluate fitness
             chromosome.evaluate_fitness(model)
 
-        bestChromosome = chooseOptimalChromosome(geneticAlgorithm.chromosomeList)
+
+        bestGenerationChromosome = chooseOptimalChromosome(geneticAlgorithm.chromosomeList)
+
         print("Iteration Number: ", x)
-        print("Best Fitness Score: ", bestChromosome.fitnessScore)
-        Results(bestChromosome.model).print_results()
+        print("Best Fitness Score: ", bestGenerationChromosome.fitnessScore)
+        results.insertNewGeneration(x, geneticAlgorithm.chromosomeList)
+        results.print_results(bestGenerationChromosome.model)
 
+        if(x == 0):
+            optimalChromosome = bestGenerationChromosome
+        #set optimal chromosome
+        if(x > 0 and bestGenerationChromosome.fitnessScore < optimalChromosome.fitnessScore):
+            optimalChromosome = bestGenerationChromosome
 
+        
         #Perform the selection, crossover, and mutation 
         nextChromosomeGenerationList = geneticAlgorithm.selection()
         childChromosomeList = geneticAlgorithm.crossover(nextChromosomeGenerationList)
@@ -72,6 +83,10 @@ def main(argv):
 
         #mutate the generation before running again
         geneticAlgorithm.mutate()
+
+    results.setOptimalChromosome(optimalChromosome)
+    results.createOutputFile("testOutput.csv","testConfig","testSched",optimalChromosome.model)
+    results.print_results(optimalChromosome.model)
 
 
 if __name__ == '__main__':
