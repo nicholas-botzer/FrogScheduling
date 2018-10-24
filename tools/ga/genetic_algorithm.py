@@ -1,14 +1,22 @@
 from tools.ga.chromosome import Chromosome
 from tools.ga.chromosome_task import ChromosomeTask
 from tools.ga.crossovers import Crossovers
+from tools.ga.selection import Selection
+import random
 
 class GeneticAlgorithm:
 
     def __init__(self, taskList, numberOfChromosomes=10, 
-        crossoverTechnique=None, shuffleTaskPriority=True):
+        crossoverTechnique=None, shuffleTaskPriority=True,elitePercent=0.10,
+        selectionPercent=0.50, crossOverPercent=0.40, mutationRate=0.01):
         self.chromosomeList = []
         self.numberOfChromosomes = numberOfChromosomes
         self.initial_population(taskList,shuffleTaskPriority)
+        self.numOfEliteChromosomes = self.calculateNumberOfChromosomes(elitePercent)
+        self.numOfSelectionChromosomes = self.calculateNumberOfChromosomes(selectionPercent)
+        #cross over returns two chromosomes so we only need half the value for looping
+        self.numOfCrossOverChromosomes = round(self.calculateNumberOfChromosomes(crossOverPercent) / 2)
+        self.mutationRate = mutationRate
 
     '''
         Initializes the chromosome's for the GA
@@ -36,34 +44,19 @@ class GeneticAlgorithm:
         Return:
             - List of chromosomes that will live on
     '''          
-    def selection(self, numberOfChromosomesToLive):
+    def selection(self):
         chromosomesToLiveList = []
-        for x in range (0,numberOfChromosomesToLive):
-            chromosomesToLiveList.append(self.roulette_wheel_selection())
+
+        self.normalizeFitnessScores()
+
+        chromosomesToLiveList.extend(Selection.selectElitePopulation(self.chromosomeList, self.numOfEliteChromosomes))
+
+        #Perform roulette wheel selection
+        for x in range (0,self.numOfSelectionChromosomes):
+            chromosomesToLiveList.append(Selection.rouletteWheelSelection(self.chromosomeList))
         
         return chromosomesToLiveList
 
-    '''
-        Performs a roulette wheel selection the the chromosome list to get a chromosome
-        Args: N/A
-        Return:
-            - Chromosome selected to continue living it's life
-    '''
-    def roulette_wheel_selection(self):
-
-        highestFitnessScore = max(self.chromosomeList, key = lambda x: (x.fitnessScore)).fitnessScore
-
-        for chromosome in self.chromosomeList:
-            chromosome.fitnessScore = highestFitnessScore - (chromosome.fitnessScore)
-
-        maximum = sum(chromosome.fitnessScore for chromosome in self.chromosomeList)
-    
-        pick = random.uniform(0, maximum)
-        current = 0
-        for chromosome in self.chromosomeList:
-            current += chromosome.fitnessScore
-            if current > pick:
-                return chromosome
 
     '''
     Args
@@ -72,20 +65,20 @@ class GeneticAlgorithm:
     Return
     - list of new chromosomes created from the parent chromosomes
     '''
-    def crossover(self, parentChromosomesList, numberOfChildrenDesired=0):
+    def crossover(self, parentChromosomesList):
 
         newChromosomesList = []
-        for x in range(0,numberOfChildrenDesired):
-            parentOneIndex = random.randint(0, len(parentChromosomesList)-1)
-            parentTwoIndex = random.randint(0, len(parentChromosomesList)-1)
+        for x in range(0, (self.numOfCrossOverChromosomes)):
+            parentOneChromosome = Selection.rouletteWheelSelection(parentChromosomesList)
+            parentTwoChromosome = Selection.rouletteWheelSelection(parentChromosomesList)
 
             newChromosomeOne = Chromosome()
             newChromosomeTwo = Chromosome()
 
             newChromosomeOne.taskToPriorityDict, \
             newChromosomeTwo.taskToPriorityDict = \
-                Crossovers.OX1(parentChromosomesList[parentOneIndex].taskToPriorityDict, \
-                parentChromosomesList[parentTwoIndex].taskToPriorityDict)
+                Crossovers.OX2(parentOneChromosome.taskToPriorityDict, \
+                parentTwoChromosome.taskToPriorityDict)
 
 
             newChromosomesList.append(newChromosomeOne)
@@ -94,13 +87,31 @@ class GeneticAlgorithm:
         return newChromosomesList
 
                 
-    def mutate(self, mutationRate=1.5):
+    def mutate(self):
         for chromosome in self.chromosomeList:
 
             mutationChance = random.uniform(0,100)
-            if(mutationChance < mutationRate):
+            if(mutationChance < self.mutationRate):
                 #time to mutateL!!!
                 dictionary = chromosome.taskToPriorityDict
                 key1, key2 = random.sample(list(dictionary), 2)
                 dictionary[key1], dictionary[key2] = dictionary[key2], dictionary[key1]
+
+
+
+
+######## HELPER FUNCTIONS #####################################################################
+
+    def normalizeFitnessScores(self):
+        #normalize fitness scores before performing roulette wheel selection
+        highestFitnessScore = max(self.chromosomeList, key = lambda x: (x.fitnessScore)).fitnessScore
+
+        #If all fitness scores are not equal need to normalize before roulette wheel selection
+        if not all(x.fitnessScore == self.chromosomeList[0].fitnessScore for x in self.chromosomeList):
+            for chromosome in self.chromosomeList:
+                chromosome.fitnessScore = highestFitnessScore - (chromosome.fitnessScore)
+
+
+    def calculateNumberOfChromosomes(self, percent):
+        return round(self.numberOfChromosomes * percent)
 

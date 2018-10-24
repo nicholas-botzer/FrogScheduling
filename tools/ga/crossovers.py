@@ -1,3 +1,5 @@
+import random
+
 """
 Holds static methods implementing different crossover algorithms.
 """
@@ -176,10 +178,10 @@ class Crossovers(object):
             taskinP1, taskinP2 = taskList1[pos], taskList2[pos]
             for idx, (t1, t2) in enumerate(zip(taskList1,taskList2)):
                 t1done,t2done = False,False
-                if t2.name == taskinP1.name:
+                if t2 == taskinP1:
                     newTaskList2[idx] = None
                     t2done = True
-                if t1.name == taskinP2.name:
+                if t1 == taskinP2:
                     newTaskList1[idx] = None
                     t1done = True
                 if t1done and t2done:

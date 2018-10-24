@@ -3,7 +3,7 @@ from os import listdir
 from os.path import abspath, dirname, isfile, join
 import xml.etree.ElementTree as ET
 
-from simulators import *
+from simulators.ga_simulator import main
 
 
 ### Parse and Check Arguments
@@ -26,8 +26,8 @@ parser.add_argument('--numChrom', metavar='N',
                     type=int,default=30)
 parser.add_argument('--ESCperc','-ESC', metavar='N',
                     help='Specify the elite, selection, crossover ratio in ' \
-                    'percents. (MUST sum to 100)', 
-                    nargs=3,type=float,default=[10,50,40])
+                    'percents. (MUST sum to 1.0)', 
+                    nargs=3,type=float,default=[0.10,0.50,0.40])
 parser.add_argument('--mutRate', '-mr', metavar='R',
                     help='Specify the starting mutation rate',
                     type=float,default=1.5)
