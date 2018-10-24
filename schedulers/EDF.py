@@ -2,13 +2,13 @@
 Implementation of the Global-EDF (Earliest Deadline First) for multiprocessor
 architectures.
 """
+import logging
 from simso.core import Scheduler
 from simso.schedulers import scheduler
-import logging
 from collections import defaultdict
 
 @scheduler("simso.schedulers.EDF")
-class EDFScheduler(Scheduler):
+class EDF(Scheduler):
 
     def init(self):
         self.ganttData = defaultdict(list)

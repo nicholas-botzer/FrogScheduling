@@ -7,10 +7,10 @@ logging.disable(999999)
 from collections import defaultdict
 from simso.core import Scheduler
 from simso.schedulers import scheduler
-from Crossovers import Crossovers
+from tools.ga.crossovers import Crossovers
 
 
-class FrogScheduler(Scheduler):
+class FROG(Scheduler):
 
     def init(self):
         self.ganttData = defaultdict(list)

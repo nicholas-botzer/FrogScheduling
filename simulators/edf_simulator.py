@@ -1,15 +1,15 @@
 import sys, logging
-logging.basicConfig(format='%(message)s',stream=sys.stderr, level=logging.DEBUG)
 from simso.core import Model
 from simso.configuration import Configuration
-from Results import Results
-from Debug import Debug
+from tools.results import Results
+from tools.debug import Debug
+
+logging.basicConfig(format='%(message)s',stream=sys.stderr, level=logging.DEBUG)
 
 """
 Runs EDF (earliest deadline first) scheduling algorithm.
 """
 def main(argv):
-    argv = [0,"./ConfigurationFiles/EDF_baseTest.xml"]
     if len(argv) == 2:
         # Configuration load from a file.
         configuration = Configuration(argv[1])

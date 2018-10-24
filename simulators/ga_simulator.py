@@ -2,11 +2,11 @@ import sys, logging
 logging.basicConfig(format='%(message)s',stream=None, level=logging.NOTSET)
 from simso.core import Model
 from simso.configuration import Configuration
-from GeneticAlgorithm import GeneticAlgorithm
-from Crossovers import Crossovers
-from Results import Results
-from Debug import Debug
-from Chromosome import Chromosome
+from tools.ga.genetic_algorithm import GeneticAlgorithm
+from tools.ga.crossovers import Crossovers
+from tools.ga.chromosome import Chromosome
+from tools.results import Results
+from tools.debug import Debug
 
 def chooseOptimalChromosome(chromosomeList):
     bestFitnessScore = 9999999
@@ -21,7 +21,6 @@ def chooseOptimalChromosome(chromosomeList):
     return bestChromosome
 
 def main(argv):
-    # argv = [0,"./ConfigurationFiles/FS_baseTest.xml"]
     configuration = None
     if len(argv) == 2:
         # Configuration load from a file.
@@ -43,7 +42,7 @@ def main(argv):
     optimalChromosome = Chromosome()
 
     #Run genetic algorithm
-    for x in range(0,4):
+    for x in range(0,20):
         for chromosome in geneticAlgorithm.chromosomeList:
             #set chromosome for model to use
             model = Model(configuration)
@@ -70,7 +69,6 @@ def main(argv):
         if(x > 0 and bestGenerationChromosome.fitnessScore < optimalChromosome.fitnessScore):
             optimalChromosome = bestGenerationChromosome
 
-        
         #Perform the selection, crossover, and mutation 
         nextChromosomeGenerationList = geneticAlgorithm.selection()
         childChromosomeList = geneticAlgorithm.crossover(nextChromosomeGenerationList)

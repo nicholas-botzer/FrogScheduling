@@ -1,8 +1,8 @@
+from tools.ga.chromosome import Chromosome
+from tools.ga.chromosome_task import ChromosomeTask
+from tools.ga.crossovers import Crossovers
+from tools.ga.selection import Selection
 import random
-from Chromosome import Chromosome
-from ChromosomeTask import ChromosomeTask
-from Crossovers import Crossovers
-from selection import Selection
 
 class GeneticAlgorithm:
 
