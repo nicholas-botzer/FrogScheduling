@@ -24,7 +24,7 @@ def main(args):
     configuration = None
     print(args)
     # Configuration load from a file.
-    configuration = Configuration(args.config)
+    configuration = Configuration(args.configPath)
     
 
     # Check the config before trying to run it.

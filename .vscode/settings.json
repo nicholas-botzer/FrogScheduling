@@ -3,5 +3,5 @@
         80,
         120
     ],
-    "python.pythonPath": "/Library/Frameworks/Python.framework/Versions/2.7/bin/python"
+    "python.pythonPath": "/Library/Frameworks/Python.framework/Versions/3.7/bin/python3"
 }

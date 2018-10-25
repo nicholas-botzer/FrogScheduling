@@ -179,4 +179,5 @@ Press h to open a hovercard with more details.
 # Custom
 *.json
 *.csv
-.vscode/settings.json
+.vscode/
+
