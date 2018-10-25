@@ -1,21 +1,21 @@
-import sys, argparse, os, logging, importlib
+import sys, argparse, os, logging, importlib, pkgutil
 from os import listdir
 from os.path import abspath, dirname, isfile, join
 import xml.etree.ElementTree as ET
 
-from simulators.ga_simulator import main
+from simulators import *
 
 
 ### Parse and Check Arguments
 parser = argparse.ArgumentParser(
     description='Simulate schedulers.')
-parser.add_argument('simulator', metavar='module_name',
+parser.add_argument('simModuleName', metavar='module_name',
                     help='Specify the name of the simulator module.',
                     type=str)
-parser.add_argument('sched', metavar='scheduler_filename',
+parser.add_argument('schedFileName', metavar='scheduler_filename',
                     help='Specify the name of the scheduler file.',
                     type=str)
-parser.add_argument('config', metavar='config_file_name',
+parser.add_argument('configFileName', metavar='config_file_name',
                     help='Specify the name of the config file.',
                     type=str)
 parser.add_argument('--numGen', metavar='N',
@@ -51,23 +51,58 @@ assert args.numGen > 0, 'Number of generations (%d) invalid'%args.numGen
 
 # Check files
 currPath = dirname(abspath(__file__))
-configPath = os.path.join(f'{currPath}/ConfigurationFiles',args.config)
-assert os.path.isfile(configPath), f'Config File {args.config} is invalid'
+configPath = os.path.join(f'{currPath}/ConfigurationFiles',args.configFileName)
+assert os.path.isfile(configPath), f'Config File {args.configFileName} is invalid'
 args.configPath = configPath
 
-schedPath = os.path.join(f'{currPath}/schedulers',args.sched)
-assert os.path.isfile(schedPath), f'Scheduler File {args.sched} is invalid'
+schedPath = os.path.join(f'{currPath}/schedulers',args.schedFileName)
+assert os.path.isfile(schedPath), f'Scheduler File {args.schedFileName} is invalid'
 
-mod = importlib.util.find_spec(f'simulators.{args.simulator}')
-assert mod is not None, f'Simulator module {args.simulator} does not exist.'
+simMod = importlib.util.find_spec(f'simulators.{args.simModuleName}')
+assert simMod is not None, f'Simulator module {args.simModuleName} does not exist.'
 
 ### Config File: Add similator to XML and grab file
 xmlTree = ET.parse(configPath)
-print(schedPath, ET.SubElement(xmlTree.getroot(),'sched'))
-ET.SubElement(xmlTree.getroot(),'sched').set('className',schedPath)
-# new_tag.attrib['x'] = '1'
-xmlTree.write(args.config)
+xmlTree.getroot().findall('sched')[0].set('className',schedPath)
+xmlTree.write(configPath)
 
 ### Execute Simulator
+importedSimMod = importlib.import_module(f"simulators.{args.simModuleName}")
+importedSimMod.main(args)
+
 sys.exit(0)
-edf_simulator.main([0,config_dir])
+
+#simMod.loader.main(args)
+for mod in sys.modules:
+    print(type(mod))
+current_module = __import__(__name__)
+
+# this is the package we are inspecting -- for example 'email' from stdlib
+for importer, modname, _ in pkgutil.iter_modules(sys.modules['simulators'].__path__):
+    if modname == args.simModuleName:
+        print(f'simulators.{modname}')
+        module = __import__(f'simulators.{modname}',globals())
+        print("Imported", module)
+    #module = __import__(modname, fromlist="dummy")
+    #
+#print(sys.modules['edf_simulator'])
+
+
+
+e = None
+for e in globals():
+    if e == 0:
+        print(e)
+
+
+
+#print(sys.modules[f'simulators/{args.simulator}']) #['mod1'])
+# print(sys.modules[f'simulators/{args.simulator}'])
+# print(f'simulators/{args.simulator}')
+e = None
+GD = globals()
+for e in GD:
+    print(f'Elem {e}: {GD[e]}' )
+#print(globals())
+
+edf_simulator.main(args)
