@@ -51,7 +51,7 @@ assert args.numGen > 0, 'Number of generations (%d) invalid'%args.numGen
 
 # Check files
 currPath = dirname(abspath(__file__))
-configPath = os.path.join(currPath,ConfigurationFiles,args.configFileName)
+configPath = os.path.join(currPath,'ConfigurationFiles',args.configFileName)
 assert os.path.isfile(configPath), f'Config File {args.configFileName} is invalid'
 args.configPath = configPath
 
