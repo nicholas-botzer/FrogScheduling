@@ -1,16 +1,15 @@
-<?xml version="1.0" ?>
 <simulation cycles_per_ms="1000000" duration="50000000" etm="wcet">
-	<sched className="" overhead="0" overhead_activate="0" overhead_terminate="0"/>
-	<caches memory_access_time="100"/>
+	<sched className="/Users/cz/Desktop/OS Project/FrogScheduling/schedulers/EDF.py" overhead="0" overhead_activate="0" overhead_terminate="0" />
+	<caches memory_access_time="100" />
 	<processors>
-		<processor cl_overhead="0" cs_overhead="0" id="1" name="CPU 1" speed="1.0"/>
-		<processor cl_overhead="0" cs_overhead="0" id="2" name="CPU 2" speed="1.0"/>
+		<processor cl_overhead="0" cs_overhead="0" id="1" name="CPU 1" speed="1.0" />
+		<processor cl_overhead="0" cs_overhead="0" id="2" name="CPU 2" speed="1.0" />
 	</processors>
 	<tasks>
-		<task ACET="0" WCET="15.0" abort_on_miss="yes" activationDate="10.0" base_cpi="1.0" deadline="50.0" et_stddev="0" id="1" instructions="0" list_activation_dates="10.0" mix="0.5" name="TASK T1" period="15.0" preemption_cost="0" task_type="Sporadic"/>
-		<task ACET="0" WCET="10.0" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="50.0" et_stddev="0" id="2" instructions="0" list_activation_dates="15.0" mix="0.5" name="TASK T2" period="10" preemption_cost="0" task_type="Sporadic"/>
-		<task ACET="0" WCET="10.0" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="50.0" et_stddev="0" id="3" instructions="0" list_activation_dates="23.0" mix="0.5" name="TASK T3" period="10" preemption_cost="0" task_type="Sporadic"/>
-		<task ACET="0" WCET="10.0" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="50.0" et_stddev="0" id="4" instructions="0" list_activation_dates="0.0" mix="0.5" name="TASK T4" period="10" preemption_cost="0" task_type="Sporadic"/>
-		<task ACET="0" WCET="20.0" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="50.0" et_stddev="0" id="5" instructions="0" list_activation_dates="0.0" mix="0.5" name="TASK T5" period="10" preemption_cost="0" task_type="Sporadic"/>
+		<task ACET="0" WCET="15.0" abort_on_miss="yes" activationDate="10.0" base_cpi="1.0" deadline="50.0" et_stddev="0" id="1" instructions="0" list_activation_dates="10.0" mix="0.5" name="TASK T1" period="15.0" preemption_cost="0" task_type="Sporadic" />
+		<task ACET="0" WCET="10.0" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="50.0" et_stddev="0" id="2" instructions="0" list_activation_dates="15.0" mix="0.5" name="TASK T2" period="10" preemption_cost="0" task_type="Sporadic" />
+		<task ACET="0" WCET="10.0" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="50.0" et_stddev="0" id="3" instructions="0" list_activation_dates="23.0" mix="0.5" name="TASK T3" period="10" preemption_cost="0" task_type="Sporadic" />
+		<task ACET="0" WCET="10.0" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="50.0" et_stddev="0" id="4" instructions="0" list_activation_dates="0.0" mix="0.5" name="TASK T4" period="10" preemption_cost="0" task_type="Sporadic" />
+		<task ACET="0" WCET="20.0" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="50.0" et_stddev="0" id="5" instructions="0" list_activation_dates="0.0" mix="0.5" name="TASK T5" period="10" preemption_cost="0" task_type="Sporadic" />
 	</tasks>
 </simulation>

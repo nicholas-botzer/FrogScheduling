@@ -14,7 +14,8 @@ Optional Arguments
 
 CMDL for FROG
 
-python3 simulate.py ga_simulator FROG.py FROG_baseTest.xml --numGen 20 --numChrom 30 -ESC .1 .5 .4 --mutRate 1.5 --resultsFN frogbase_results.txt -l
+python3 simulate.py edf_simulator EDF.py baseTest.xml --numGen 20 --numChrom 30 -ESC .1 .5 .4 --mutRate 1.5 --resultsFN frogbase_results.txt -l
+
 ==============================================================
 
 

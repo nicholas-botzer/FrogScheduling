@@ -22,7 +22,6 @@ def chooseOptimalChromosome(chromosomeList):
 
 def main(args):
     configuration = None
-    print(args)
     # Configuration load from a file.
     configuration = Configuration(args.configPath)
     
