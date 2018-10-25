@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<simulation cycles_per_ms="1000000" duration="100000000" etm="wcet">
+	<sched className="../schedulers/EDF.py" overhead="0" overhead_activate="0" overhead_terminate="0"/>
+	<caches memory_access_time="100"/>
+	<processors>
+		<processor cl_overhead="0" cs_overhead="0" id="1" name="CPU 1" speed="1.0"/>
+		<processor cl_overhead="0" cs_overhead="0" id="2" name="CPU 2" speed="1.0"/>
+	</processors>
+	<tasks>
+		<task ACET="0" WCET="11.810034" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="211.102486" et_stddev="0" id="1" instructions="0" list_activation_dates="" mix="0.5" name="Task 1" period="211.102486" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="0.0349" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="2.717044" et_stddev="0" id="2" instructions="0" list_activation_dates="" mix="0.5" name="Task 2" period="2.717044" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="100.107792" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="411.387924" et_stddev="0" id="3" instructions="0" list_activation_dates="" mix="0.5" name="Task 3" period="411.387924" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="1.004513" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="38.531175" et_stddev="0" id="4" instructions="0" list_activation_dates="" mix="0.5" name="Task 4" period="38.531175" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="1.977797" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="37.597288" et_stddev="0" id="5" instructions="0" list_activation_dates="" mix="0.5" name="Task 5" period="37.597288" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="0.296672" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="21.481411" et_stddev="0" id="6" instructions="0" list_activation_dates="" mix="0.5" name="Task 6" period="21.481411" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="0.427205" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="20.902492" et_stddev="0" id="7" instructions="0" list_activation_dates="" mix="0.5" name="Task 7" period="20.902492" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="0.058978" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="3.738966" et_stddev="0" id="8" instructions="0" list_activation_dates="" mix="0.5" name="Task 8" period="3.738966" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="0.119522" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="38.980077" et_stddev="0" id="9" instructions="0" list_activation_dates="" mix="0.5" name="Task 9" period="38.980077" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="0.07407" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="1.529929" et_stddev="0" id="10" instructions="0" list_activation_dates="" mix="0.5" name="Task 10" period="1.529929" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="0.4115" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="3.714374" et_stddev="0" id="11" instructions="0" list_activation_dates="" mix="0.5" name="Task 11" period="3.714374" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="2.228264" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="52.142428" et_stddev="0" id="12" instructions="0" list_activation_dates="" mix="0.5" name="Task 12" period="52.142428" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="0.002309" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="1.721631" et_stddev="0" id="13" instructions="0" list_activation_dates="" mix="0.5" name="Task 13" period="1.721631" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="5.663536" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="99.386599" et_stddev="0" id="14" instructions="0" list_activation_dates="" mix="0.5" name="Task 14" period="99.386599" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="7.060407" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="404.920905" et_stddev="0" id="15" instructions="0" list_activation_dates="" mix="0.5" name="Task 15" period="404.920905" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="1.290803" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="40.77813" et_stddev="0" id="16" instructions="0" list_activation_dates="" mix="0.5" name="Task 16" period="40.77813" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="1.118184" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="10.033992" et_stddev="0" id="17" instructions="0" list_activation_dates="" mix="0.5" name="Task 17" period="10.033992" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="0.019569" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="1.734309" et_stddev="0" id="18" instructions="0" list_activation_dates="" mix="0.5" name="Task 18" period="1.734309" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="79.075598" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="728.978225" et_stddev="0" id="19" instructions="0" list_activation_dates="" mix="0.5" name="Task 19" period="728.978225" preemption_cost="0" task_type="Periodic"/>
+		<task ACET="0" WCET="0.134506" abort_on_miss="yes" activationDate="0" base_cpi="1.0" deadline="8.646811" et_stddev="0" id="20" instructions="0" list_activation_dates="" mix="0.5" name="Task 20" period="8.646811" preemption_cost="0" task_type="Periodic"/>
+	</tasks>
+</simulation>
