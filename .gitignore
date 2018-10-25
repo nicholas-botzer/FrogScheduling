@@ -1,4 +1,4 @@
-
+﻿
 Skip to content
 
     Pull requests
@@ -177,7 +177,5 @@ dmypy.json
 Press h to open a hovercard with more details.
 
 # Custom
-ConfigurationFiles/
-ConfigurationFiles/config_2_20_0.xml
 *.json
 *.csv
