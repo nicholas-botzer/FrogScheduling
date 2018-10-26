@@ -1,5 +1,4 @@
 import sys, logging
-logging.basicConfig(format='%(message)s',stream=None, level=logging.NOTSET)
 from simso.core import Model
 from simso.configuration import Configuration
 from tools.ga.genetic_algorithm import GeneticAlgorithm
@@ -21,6 +20,7 @@ def chooseOptimalChromosome(chromosomeList):
     return bestChromosome
 
 def main(args):
+    logger = logging.getLogger('root')
     configuration = None
     # Configuration load from a file.
     configuration = Configuration(args.configPath)
@@ -47,7 +47,7 @@ def main(args):
             model = Model(configuration)
             model.scheduler.initializeChromosome(chromosome)
             # Execute the simulation.
-            logging.debug(Debug.getTaskListStr(chromosome.taskToPriorityDict,
+            logger.info(Debug.getTaskListStr(chromosome.taskToPriorityDict,
                                      name='Chromosome Task Priorities'))
             model.run_model()
             
