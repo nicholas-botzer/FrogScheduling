@@ -12,8 +12,7 @@ class Results():
     def setOptimalChromosome(self, optimalChromosome):
         self.optimalChromosome = optimalChromosome
 
-
-    def createOutputFile(self, outputPath, configuration, scheduler,model):
+    def createOutputFile(self, outputPath, configuration, scheduler,model,GA=False):
 
         if(os.path.exists(outputPath)):
             outputFile = open(outputPath, 'a')
@@ -26,7 +25,7 @@ class Results():
         res = model.results
         normalizedLaxity = self.getAverageNormalizedLaxity(model)
         #Non GA techniques
-        if(not self.optimalChromosome):
+        if(not GA):
             resultString = f"{configuration},{scheduler},,{res.total_exceeded_count},{res.total_preemptions},{res.total_migrations},{normalizedLaxity} \n"
         else:
             resultString = f"{configuration},{scheduler},{self.optimalChromosome.fitnessScore},{res.total_exceeded_count},{res.total_preemptions},{res.total_migrations},{normalizedLaxity} \n"
