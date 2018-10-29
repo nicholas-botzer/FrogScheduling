@@ -1,15 +1,17 @@
 import random
+
 """
 Holds static methods implementing different selection algorithms.
 """
 class Selection(object):
 
-    
     '''
-        Performs a roulette wheel selection the the chromosome list to get a chromosome
-        Args: N/A
-        Return:
-            - Chromosome selected to continue living it's life
+    Performs a roulette wheel selection, weighted by fitness score, and returns
+    
+    Args:
+    - List of chromosomes
+    Return:
+    - Chromosome selected to continue living it's life
     '''
     @staticmethod #prevents python from passing self instance
     def rouletteWheelSelection(chromosomeList):
@@ -22,8 +24,6 @@ class Selection(object):
             current += chromosome.fitnessScore
             if current > pick:
                 return chromosome
-
-
 
     @staticmethod #prevents python from passing self instance
     def selectElitePopulation(chromosomeList, numberOfChromosomesToSelect):

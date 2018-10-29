@@ -31,6 +31,7 @@ def main(args):
                     f' sim module ({simModuleName})' \
                     '\n===================================================\n\n')
             args.currentConfigIdx = cidx
+            args.currentSchedIdx = sidx
             importedSimMod.main(args)
 
 #### HELPER FUNCTIONS ###  
