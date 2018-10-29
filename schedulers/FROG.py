@@ -16,12 +16,12 @@ class FROG(Scheduler):
         self.ganttData = defaultdict(list)
     
     def on_activate(self, job):
-        logger.debug('[A] - JOB ACTIVATED. Job:{} (Time: {}) '.format(
-            job.name,self.sim.now()))
+        logger.log(5, 
+            f'[A] - JOB ACTIVATED. Job:{job.name} (Time: {self.sim.now()})')
         job.cpu.resched()
 
     def on_terminated(self, job):
-        logger.debug('[T] - JOB TERMINATED. Job:{} CPU:{} (Time: {}) '.format(
+        logger.log(5, '[T] - JOB TERMINATED. Job:{} CPU:{} (Time: {}) '.format(
             job.name,job.cpu.name,self.sim.now()))
         self.ganttData[job.cpu.name].append('Terminated job {} (Time: {})'.format(
             job.name,self.sim.now())) 
@@ -33,7 +33,7 @@ class FROG(Scheduler):
         ready_jobs = [t.job for t in self.task_list
             if t.is_active() and not t.job.is_running()]
 
-        logger.debug('[S] - Scheduler called. CPU:{} ready_jobs:{} (Time: {})'.format( 
+        logger.log(5, '[S] - Scheduler called. CPU:{} ready_jobs:{} (Time: {})'.format( 
             cpu._internal_id,[x.name for x in ready_jobs],self.sim.now()))
 
         if ready_jobs:
@@ -51,7 +51,7 @@ class FROG(Scheduler):
 
             #We have a free processor so schedule a task to it
             if(freeProcessor):
-                logger.debug('       -> Scheduled job {} to cpu {}'.format( 
+                logger.log(5, '       -> Scheduled job {} to cpu {}'.format( 
                     highestPriorJob[1].name,freeProcessor.name))
                 if freeProcessor.name not in self.ganttData:
                     # print '{} not in'.format(freeProcessor.name)
@@ -69,7 +69,7 @@ class FROG(Scheduler):
         #         #otherwise let it continue to run
 
                 if(highestPriorJob[0] > processorPriority):
-                    logger.debug('       -> Scheduled job {} to cpu {}'.format( 
+                    logger.log(5, '       -> Scheduled job {} to cpu {}'.format( 
                         highestPriorJob[1].name,processor.name))
                     if processor.name not in self.ganttData:
                         #print '{} not in'.format(processor.name)

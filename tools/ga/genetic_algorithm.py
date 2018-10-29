@@ -4,6 +4,10 @@ from tools.ga.crossovers import Crossovers
 from tools.ga.selection import Selection
 import random
 
+"""
+Container for all chromosomes and their modifications. A new object instance
+is created for each config run.
+"""
 class GeneticAlgorithm:
 
     def __init__(self, taskList, numberOfChromosomes=10, 
@@ -49,7 +53,8 @@ class GeneticAlgorithm:
 
         self.normalizeFitnessScores()
 
-        chromosomesToLiveList.extend(Selection.selectElitePopulation(self.chromosomeList, self.numOfEliteChromosomes))
+        chromosomesToLiveList.extend(Selection.selectElitePopulation(
+            self.chromosomeList, self.numOfEliteChromosomes))
 
         #Perform roulette wheel selection
         for x in range (0,self.numOfSelectionChromosomes):
@@ -100,7 +105,7 @@ class GeneticAlgorithm:
 
 
 
-######## HELPER FUNCTIONS #####################################################################
+######## HELPER FUNCTIONS #######################################################
 
     def normalizeFitnessScores(self):
         #normalize fitness scores before performing roulette wheel selection

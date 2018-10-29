@@ -1,4 +1,3 @@
-import sys, logging
 from simso.core import Model
 from simso.configuration import Configuration
 from tools.ga.genetic_algorithm import GeneticAlgorithm
@@ -6,6 +5,9 @@ from tools.ga.crossovers import Crossovers
 from tools.ga.chromosome import Chromosome
 from tools.results import Results
 from tools.debug import Debug
+
+import sys, logging
+logger = logging.getLogger('root')
 
 def chooseOptimalChromosome(chromosomeList):
     bestFitnessScore = 9999999
@@ -20,21 +22,20 @@ def chooseOptimalChromosome(chromosomeList):
     return bestChromosome
 
 def main(args):
-    logger = logging.getLogger('root')
-    configuration = None
-    # Configuration load from a file.
-    configuration = Configuration(args.configPath)
-    
 
-    # Check the config before trying to run it.
+    # Load configuration file and check
+    configPath = args.configPaths[args.currentConfigIdx]
+    configuration = Configuration(configPath)
     configuration.check_all()
 
     # Init a model from the configuration.
     model = Model(configuration)
 
     #initial population
-    geneticAlgorithm = GeneticAlgorithm(model.task_list,args.numChrom, shuffleTaskPriority=True,
-        elitePercent=args.ESCperc[0], selectionPercent=args.ESCperc[1] ,crossOverPercent=args.ESCperc[2], mutationRate=args.mutRate )
+    geneticAlgorithm = GeneticAlgorithm(model.task_list,args.numChrom, 
+        shuffleTaskPriority=True, elitePercent=args.ESCperc[0], 
+        selectionPercent=args.ESCperc[1] ,crossOverPercent=args.ESCperc[2], 
+        mutationRate=args.mutRate )
 
     results = Results()
 
@@ -47,7 +48,7 @@ def main(args):
             model = Model(configuration)
             model.scheduler.initializeChromosome(chromosome)
             # Execute the simulation.
-            logger.info(Debug.getTaskListStr(chromosome.taskToPriorityDict,
+            logger.log(3, Debug.getTaskListStr(chromosome.taskToPriorityDict,
                                      name='Chromosome Task Priorities'))
             model.run_model()
             
@@ -57,8 +58,9 @@ def main(args):
 
         bestGenerationChromosome = chooseOptimalChromosome(geneticAlgorithm.chromosomeList)
 
-        print("Iteration Number: ", x)
-        print("Best Fitness Score: ", bestGenerationChromosome.fitnessScore)
+        logger.log(15, f"--------------\n[Iteration Number: {x}]\n" \
+                f"Best Fitness Score: {bestGenerationChromosome.fitnessScore}\n")
+
         results.insertNewGeneration(x, geneticAlgorithm.chromosomeList)
         results.print_results(bestGenerationChromosome.model)
 

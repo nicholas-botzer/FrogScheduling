@@ -12,12 +12,9 @@ Optional Arguments
     --log, -l
 
 
-CMDL for FROG
+For FROG (2_25_25 Config, 20 gens, 30 chrom) -> frogbase_results.csv
 
-python3 simulate.py edf_simulator EDF.py config_2_25_25.xml --numGen 20 --numChrom 30 -ESC .1 .5 .4 --mutRate 1.5 --resultsFN frogbase_results.csv
-
+python3 simulate.py --schedNames FROG.py simso.schedulers.EDF --configFileNames config_2_25_25.xml --numGen 20 --numChrom 30 -ESC .1 .5 .4 --mutRate 1.5 --resultsFN frogbase_results.csv
+python3 simulate.py --numGen 20 --numChrom 30 -ESC .1 .5 .4 --mutRate 1.5 --resultsFN frogbase_results.csv
 
 ==============================================================
-
-
-python3 simulate.py ga_simulator EDF.py FROG_baseTest.xml --numGen 20 --numChrom 30 -ESC .1 .5 .4 --mutRate 1.5 --resultsFN frogbase_results.txt -l
