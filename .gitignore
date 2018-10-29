@@ -181,3 +181,4 @@ Press h to open a hovercard with more details.
 *.csv
 .vscode/
 .vscode/settings.json
+ConfigurationFiles/
