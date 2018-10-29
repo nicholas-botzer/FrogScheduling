@@ -19,16 +19,18 @@ class Results():
         
         if(not os.path.exists(outputPath)):
             outputFile = open(outputPath, 'w+')
-            headerString = "Configuration,Scheduler,FitnessScore,Deadlines Exceeded,Pre-emptions,Migrations,NormalizeLaxity \n"
+            headerString = "Configuration,Scheduler,FitnessScore,Deadlines Exceeded,Pre-emptions,Migrations,NormalizeLaxity,Scheduler Overhead, Activate Overhead \n"
             outputFile.write(headerString)
 
         res = model.results
         normalizedLaxity = self.getAverageNormalizedLaxity(model)
         #Non GA techniques
         if(not GA):
-            resultString = f"{configuration},{scheduler},,{res.total_exceeded_count},{res.total_preemptions},{res.total_migrations},{normalizedLaxity} \n"
+            resultString = f"{configuration},{scheduler},,{res.total_exceeded_count},"\
+            f"{res.total_preemptions},{res.total_migrations},{normalizedLaxity}, {res.scheduler.schedule_overhead}, {res.scheduler.activate_overhead} \n"
         else:
-            resultString = f"{configuration},{scheduler},{self.optimalChromosome.fitnessScore},{res.total_exceeded_count},{res.total_preemptions},{res.total_migrations},{normalizedLaxity} \n"
+            resultString = f"{configuration},{scheduler},{self.optimalChromosome.fitnessScore},{res.total_exceeded_count},"\
+            f"{res.total_preemptions},{res.total_migrations},{normalizedLaxity}, {res.scheduler.schedule_overhead}, {res.scheduler.activate_overhead}  \n"
         
         outputFile.write(resultString)
 
