@@ -18,7 +18,6 @@ class Chromosome:
             - `model`: The model of the simulation after it has ran
         Return:
             - Fitness for the given model
-
     '''
     def evaluate_fitness(self, model):
 
