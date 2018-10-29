@@ -84,7 +84,7 @@ def main(args):
         geneticAlgorithm.mutate()
 
     results.setOptimalChromosome(optimalChromosome)
-    results.createOutputFile(args.resultsFN,args.configFileName,args.simModuleName,optimalChromosome.model,GA=True)
+    results.createOutputFile(args.resultsFN,args.configFileNames[args.currentConfigIdx],args.schedNames[args.currentSchedIdx],optimalChromosome.model,GA=True)
     results.print_results(optimalChromosome.model)
 
 

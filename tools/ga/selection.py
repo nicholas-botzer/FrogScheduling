@@ -17,13 +17,18 @@ class Selection(object):
     def rouletteWheelSelection(chromosomeList):
 
         maximum = sum(chromosome.fitnessScore for chromosome in chromosomeList)
-    
-        pick = random.uniform(0, maximum)
-        current = 0
-        for chromosome in chromosomeList:
-            current += chromosome.fitnessScore
-            if current > pick:
-                return chromosome
+
+
+        if(maximum == 0):
+            pick = random.randint(0, len(chromosomeList)-1)
+            return chromosomeList[pick]
+        else:
+            pick = random.uniform(0, maximum)
+            current = 0
+            for chromosome in chromosomeList:
+                current += chromosome.fitnessScore
+                if current > pick:
+                    return chromosome
 
     @staticmethod #prevents python from passing self instance
     def selectElitePopulation(chromosomeList, numberOfChromosomesToSelect):
