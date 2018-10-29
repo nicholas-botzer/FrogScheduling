@@ -9,17 +9,15 @@ logging.basicConfig(format='%(message)s',stream=sys.stderr, level=logging.DEBUG)
 """
 Runs EDF (earliest deadline first) scheduling algorithm.
 """
-def main(argv):
-    if len(argv) == 2:
-        # Configuration load from a file.
-        configuration = Configuration(argv[1])
-    else:
-        # Manual configuration:
-        configuration = Configuration()
+def main(args):
+    configuration = None
+    # Configuration load from a file.
+    configuration = Configuration(args.configPath)
 
     # Check the config before trying to run it.
     configuration.check_all()
 
+    results = Results()
 
     # Init a model from the configuration.
     model = Model(configuration)
@@ -27,9 +25,9 @@ def main(argv):
     # Execute the simulation.
     model.run_model()
 
-    Debug.printGanttPerCPU(model.scheduler.ganttData)
-
-    Results(model).print_results()
+    # Debug.printGanttPerCPU(model.scheduler.ganttData)
+    print(args)
+    results.createOutputFile(args.resultsFN,args.configFileName,args.simModuleName, model)
 
 if __name__ == '__main__':
     main(sys.argv)
