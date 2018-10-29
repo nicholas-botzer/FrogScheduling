@@ -34,7 +34,7 @@ parser.add_argument('--mutRate', '-mr', metavar='R',
 parser.add_argument('--resultsFN', metavar='FN', 
                     help='Specify where to output results stats to.',
                     type=str,default='results')
-parser.add_argument('--log', '-l', 
+parser.add_argument('--log', '-l',
                     help='Flag to print out log statements for debugging.',
                     action='store_true',default=False)
 args = parser.parse_args()
@@ -66,7 +66,13 @@ xmlTree = ET.parse(configPath)
 xmlTree.getroot().findall('sched')[0].set('className',schedPath)
 xmlTree.write(configPath)
 
-### Execute Simulator
+### Execute Simulator with logging settings
+if args.log:
+    logging.basicConfig(format='%(message)s', level=logging.DEBUG)
+else:
+    logging.getLogger('root').setLevel(logging.WARNING)
+
+
 importedSimMod = importlib.import_module(f"simulators.{args.simModuleName}")
 importedSimMod.main(args)
 
