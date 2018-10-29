@@ -31,7 +31,7 @@ class GeneticAlgorithm:
 
     '''
     def initial_population(self, taskList, shuffle=True):
-        for x in range(0, self.numberOfChromosomes):
+        for _ in range(self.numberOfChromosomes):
             chromosome = Chromosome()
             if shuffle:
                 random.shuffle(taskList)
@@ -57,7 +57,7 @@ class GeneticAlgorithm:
             self.chromosomeList, self.numOfEliteChromosomes))
 
         #Perform roulette wheel selection
-        for x in range (0,self.numOfSelectionChromosomes):
+        for _ in range (self.numOfSelectionChromosomes):
             chromosomesToLiveList.append(Selection.rouletteWheelSelection(self.chromosomeList))
         
         return chromosomesToLiveList

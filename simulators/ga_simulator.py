@@ -58,7 +58,7 @@ def main(args):
 
         bestGenerationChromosome = chooseOptimalChromosome(geneticAlgorithm.chromosomeList)
 
-        logger.log(15, f"--------------\n[Iteration Number: {x}]\n" \
+        logger.log(15, f"--------------\n[Iteration Number: {x+1}]\n" \
                 f"Best Fitness Score: {bestGenerationChromosome.fitnessScore}\n")
 
         results.insertNewGeneration(x, geneticAlgorithm.chromosomeList)
