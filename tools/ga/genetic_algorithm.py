@@ -73,7 +73,7 @@ class GeneticAlgorithm:
     def crossover(self, parentChromosomesList):
 
         newChromosomesList = []
-        for x in range(0, (self.numOfCrossOverChromosomes)):
+        for _ in range(self.numOfCrossOverChromosomes):
             parentOneChromosome = Selection.rouletteWheelSelection(parentChromosomesList)
             parentTwoChromosome = Selection.rouletteWheelSelection(parentChromosomesList)
 

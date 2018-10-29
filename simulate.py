@@ -99,6 +99,7 @@ def check_args(args):
         with open('Scheduler List','r') as f:
             for idx,line in enumerate(f):
                 if idx == 0: continue
+                if 'END' in line: break
                 schedNames.append(line.rstrip())
     currPath = dirname(abspath(__file__))
     simsoSchedPath = dirname(abspath(simso.schedulers.__file__))
