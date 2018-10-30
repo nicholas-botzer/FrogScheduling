@@ -182,5 +182,22 @@ Press h to open a hovercard with more details.
 .vscode/
 .vscode/settings.json
 ConfigurationFiles/
+<<<<<<< HEAD
 *.xml
 **/*.xml
+=======
+ConfigurationFiles/periodicTest.xml
+ConfigurationFiles/config_4_50_0.xml
+ConfigurationFiles/config_4_25_25.xml
+ConfigurationFiles/config_4_20_0.xml
+ConfigurationFiles/config_4_10_10.xml
+ConfigurationFiles/config_4_0_50.xml
+ConfigurationFiles/config_4_0_20.xml
+ConfigurationFiles/config_2_50_0.xml
+ConfigurationFiles/config_2_25_25.xml
+ConfigurationFiles/config_2_20_0.xml
+ConfigurationFiles/config_2_10_10.xml
+ConfigurationFiles/config_2_0_50.xml
+ConfigurationFiles/config_2_0_20.xml
+ConfigurationFiles/baseTest.xml
+>>>>>>> 0466a9e4ce0ddfea9429fad5f96fa4a6eae9a9f9

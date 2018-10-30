@@ -25,8 +25,11 @@ def main(args):
     model.run_model()
 
     # Debug.printGanttPerCPU(model.scheduler.ganttData)
-    results.createOutputFile(args.resultsFN,args.configFileNames[args.currentConfigIdx],
-        args.schedNames[args.currentSchedIdx],optimalChromosome.model,GA=True)
+    print(args)
+    results.createOutputFile(args.resultsFN,
+            args.configFileNames[args.currentConfigIdx],
+            args.schedNames[args.currentSchedIdx], 
+            model)
 
 if __name__ == '__main__':
     main(sys.argv)
