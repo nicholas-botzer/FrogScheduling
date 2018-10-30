@@ -12,7 +12,8 @@ Runs EDF (earliest deadline first) scheduling algorithm.
 def main(args):
     configuration = None
     # Configuration load from a file.
-    configuration = Configuration(args.configPath)
+    configPath = args.configPaths[args.currentConfigIdx]
+    configuration = Configuration(configPath)
 
     # Check the config before trying to run it.
     configuration.check_all()
@@ -27,7 +28,7 @@ def main(args):
 
     # Debug.printGanttPerCPU(model.scheduler.ganttData)
     print(args)
-    results.createOutputFile(args.resultsFN,args.configFileName,args.simModuleName, model)
+    results.createOutputFile(args.resultsFN,args.configFileNames[args.currentConfigIdx],args.schedNames[args.currentSchedIdx], model)
 
 if __name__ == '__main__':
     main(sys.argv)

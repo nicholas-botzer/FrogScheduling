@@ -5,8 +5,4 @@ simso.schedulers.EPDF
 simso.schedulers.RM
 simso.schedulers.LLF
 simso.schedulers.G_FL
-simso.schedulers.U_EDF
-simso.schedulers.LRE_TL
 simso.schedulers.LLREF
-simso.schedulers.BF
-simso.schedulers.EKG
