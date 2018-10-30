@@ -183,3 +183,4 @@ Press h to open a hovercard with more details.
 .vscode/settings.json
 ConfigurationFiles/
 *.xml
+**/*.xml
