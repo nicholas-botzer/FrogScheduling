@@ -1,10 +1,13 @@
 from simso.core import Model
 import os
+import matplotlib.pyplot as plt
+import numpy as np
 
 class Results():
 
     def __init__(self):
         self.dictOfIterationToGenerationList = {}
+        self.graphDataList = []
 
     def insertNewGeneration(self, iteration, chromosomeGenerationList):
         self.dictOfIterationToGenerationList[iteration] = chromosomeGenerationList
@@ -12,42 +15,81 @@ class Results():
     def setOptimalChromosome(self, optimalChromosome):
         self.optimalChromosome = optimalChromosome
 
-    def createOutputFile(self, outputPath, configuration, scheduler,model,GA=False):
+    def createOutputFile(self, outputPath, configuration, scheduler,
+                         fitness, GA=False):
 
         if(os.path.exists(outputPath)):
             outputFile = open(outputPath, 'a')
         
         if(not os.path.exists(outputPath)):
             outputFile = open(outputPath, 'w+')
-            headerString = "Configuration,Scheduler,FitnessScore,Deadlines Exceeded,Pre-emptions,Migrations,NormalizeLaxity,Scheduler Overhead, Activate Overhead \n"
+            headerString = "Configuration,Scheduler,FitnessScore," \
+                "Deadlines Exceeded,Pre-emptions,Migrations,NormalizeLaxity," \
+                "Scheduler Overhead, Activate Overhead \n"
             outputFile.write(headerString)
 
-        res = model.results
-        normalizedLaxity = self.getAverageNormalizedLaxity(model)
         #Non GA techniques
         if(not GA):
-            resultString = f"{configuration},{scheduler},,{res.total_exceeded_count},"\
-            f"{res.total_preemptions},{res.total_migrations},{normalizedLaxity}, {res.scheduler.schedule_overhead}, {res.scheduler.activate_overhead} \n"
+            resultString = f"{configuration},{scheduler},," + \
+                           fitness.getFitnessCSVStr()
         else:
-            resultString = f"{configuration},{scheduler},{self.optimalChromosome.fitnessScore},{res.total_exceeded_count},"\
-            f"{res.total_preemptions},{res.total_migrations},{normalizedLaxity}, {res.scheduler.schedule_overhead}, {res.scheduler.activate_overhead}  \n"
+            resultString =  f"{configuration},{scheduler}," + \
+                            f"{self.optimalChromosome.fitnessScore}," + \
+                            fitness.getFitnessCSVStr()
         
         outputFile.write(resultString)
 
 
-    def getAverageNormalizedLaxity(self, model):
-        count = 0
-        totalNormalizedLaxity = 0
-        for task in model.results.tasks.values():
-            for job in task.jobs:
-                if(job.task.deadline and job.response_time):
-                    totalNormalizedLaxity += job.normalized_laxity
-                    count += 1
-
-        return totalNormalizedLaxity / count
-
     #Used for deubgging/testing
-    def print_results(self,model):
+    def print_results(self,fitness):
         print("Total Migrations: " + str(model.results.total_migrations))
         print("Total Pre-emptions: " + str(model.results.total_preemptions))
         print("Total Exceeded Count: " + str(model.results.total_exceeded_count))
+
+
+    @staticmethod
+    def outputStatsForRun(outputPath, configuration, scheduler, organism):
+        
+        outputFile = None
+        if(os.path.exists(outputPath)):
+            outputFile = open(outputPath, 'a')
+        else:
+            outputFile = open(outputPath, 'w+')
+            headerString = "Generation,Deadlines Missed,Preemptions,Migrations,Fitness Score\n"
+            outputFile.write(headerString)
+        
+        outputFile.write(f'{configuration},{scheduler},'
+         f'TotalChrom{organism.numberOfChromosomes},MR{organism.mutationRate}\n')
+        
+        fsData = []
+        for idx,bestChrom in enumerate(organism.optimalChromList):
+            gen = idx+1
+            dm = bestChrom.fitness.metricToVal['Total Exceeded Count'][idx]
+            pr = bestChrom.fitness.metricToVal['Total Preemptions'][idx]
+            mi = bestChrom.fitness.metricToVal['Total Migrations'][idx]
+            fs = bestChrom.fitness.metricToVal['Fitness Score'][idx]
+            printStr = f"{gen},{dm},{pr},{mi},{fs}\n"
+            outputFile.write(printStr)
+            fsData.append(fs)
+        #self.graphDataList.append(fsData)
+    
+    @staticmethod
+    def showGraph():
+        legendLabels = ['100 Chromosomes, 0.5 MR',
+                        '100 Chromosomes, 1.0 MR',
+                        '100 Chromosomes, 1.5 MR']
+
+        data05 = []
+        data10 = []
+        data15 = []
+        x_gens = np.arange(20)
+
+        plt.plot(x_gens, data05)
+        plt.plot(x_gens, data10)
+        plt.plot(x_gens, data15)
+
+        plt.legend(['0.5 MR', '1.0 MR', '1.5 MR'], loc='upper left');
+        plt.xlabel('Generations');
+        plt.ylabel('Fitness Score');
+        plt.show(block=False);
+        input('press <ENTER> to continue');

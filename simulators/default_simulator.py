@@ -25,11 +25,11 @@ def main(args):
     model.run_model()
 
     # Debug.printGanttPerCPU(model.scheduler.ganttData)
-    print(args)
-    results.createOutputFile(args.resultsFN,
-            args.configFileNames[args.currentConfigIdx],
-            args.schedNames[args.currentSchedIdx], 
-            model)
+    # print(args)
+    # results.createOutputFile(args.resultsFN,
+    #         args.configFileNames[args.currentConfigIdx],
+    #         args.schedNames[args.currentSchedIdx], 
+    #         model)
 
 if __name__ == '__main__':
     main(sys.argv)

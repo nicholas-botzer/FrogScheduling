@@ -4,6 +4,7 @@ from os.path import abspath, dirname, isfile, join
 import xml.etree.ElementTree as ET
 import simso.schedulers
 from simulators import *
+from tools.results import Results
 
 logging.basicConfig(format='%(message)s')
 logger = logging.getLogger('root')
@@ -17,6 +18,8 @@ def main(args):
     else:
         logger.setLevel(20)
     
+    #results = Results()
+    #args.results = results
     ### Main nested loop for simulator calls
     for sidx,schedName in enumerate(args.schedNames):
         for cidx,configFileName in enumerate(args.configFileNames):

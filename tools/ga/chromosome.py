@@ -1,28 +1,35 @@
+from tools.fitness import Fitness
+
 class Chromosome:
 
-    def __init__(self):
-        self.taskToPriorityDict = {}
-        self.fitnessScore = 0
+    def __init__(self, taskList, name='Noname'):
+        self.priorityDictList = [] # holds dicts that maps taskName to priority
+        self.taskNameToPriority = dict(zip(
+                                    [t.name for t in taskList],
+                                    range(len(taskList))))
+        self.fitness = Fitness()
+        self.name = name
 
-    def insert_task(self, task,priority):
-        self.taskToPriorityDict[task.name] = priority
+    def __str__(self):
+        return str(self.name)
 
-    def update_task(self, task, priority):
-        if(task in self.taskToPriorityDict):
-            self.taskToPriorityDict[task.name] = priority
+    def __repr__(self):
+        return str(self.name)
+    
+    def saveCurrentPriorityDict(self):
+        self.priorityDictList.append(self.taskNameToPriority)
 
+    def setNewPriorityDict(self,newDict):
+        self.taskNameToPriority = newDict
+    
+    # def updateTaskListWithLists(self, tasklist, prioritylist):
+    #     for 
+    #     self.taskNameToPriority[task.name] = priority
 
-    '''
-        Initializes the chromosome's for the GA
-        Args:
-            - `model`: The model of the simulation after it has ran
-        Return:
-            - Fitness for the given model
-    '''
-    def evaluate_fitness(self, model):
+    # def update_task(self, task, priority):
+    #     assert task in self.taskNameToPriorityDict, \
+    #            f'Task ({task}) not in {self.taskNameToPriorityDict.items()}'
+    #     self.taskNameToPriority[task.name] = priority
 
-        self.fitnessScore = (model.results.total_exceeded_count * 40) + \
-            model.results.total_preemptions
-        self.model = model
 
         

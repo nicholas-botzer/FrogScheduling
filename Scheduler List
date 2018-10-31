@@ -6,10 +6,4 @@ simso.schedulers.EPDF
 simso.schedulers.RM
 simso.schedulers.LLF
 simso.schedulers.G_FL
-<<<<<<< HEAD
 simso.schedulers.LLREF
-simso.schedulers.BF
-simso.schedulers.EKG
-=======
-simso.schedulers.LLREF
->>>>>>> 0466a9e4ce0ddfea9429fad5f96fa4a6eae9a9f9

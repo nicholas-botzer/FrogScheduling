@@ -1,64 +1,43 @@
 import random
 
 """
-Holds static methods implementing different crossover algorithms.
+Holds methods implementing chromosome manipulation including crossover 
+algorithms and selection methods.
 """
-class Crossovers(object):
+class ChangeChromosomes:
 
-####### HELPER FUNCTIONS #######
-    ''' (For OX1)
-    Args
-    - mini: minimum value in partition range
-    - maxi: maximum value in partition range
-    - n: number of partitions to return
-    Return
-    - list of partition indexes in increasing order
+    ####### SELECTION IMPLEMENTATIONS #######
+    '''
+    Performs a roulette wheel selection, weighted by fitness score, and returns
+
+    Args:
+    - List of chromosomes
+    Return:
+    - Chromosome selected to continue living it's life
     '''
     @staticmethod #prevents python from passing self instance
-    def generateRandIdxList(mini,maxi,n):
-        if n >= maxi-mini:
-            return range(mini,maxi+1)
-        partitions = []
-        while len(partitions) < n:
-            ri = random.randint(mini,maxi)
-            if ri not in partitions:
-                partitions.append(ri)
-        return sorted(partitions)
-    '''
-    Args
-    - taskDict: dictionary that maps tasks to their order index / priority
-    Return
-    - List of tasks where its index indicates its priority
-    '''
-    @staticmethod 
-    def dictToList(taskDict):
-        taskList = len(taskDict)*[None]
-        for k,v in taskDict.items():
-            if v > len(taskDict) - 1:
-                raise ValueError('Dictionary value incorrect! You have'
-                ' index %d in %d number of items' % (v,len(taskDict)))
-            taskList[v] = k
-        if None in taskList:
-            raise ValueError('Dictionary mapping is incorrect!')
-        return taskList
-    '''
-    Args
-    - task: task object 
-    - taskList: list to check if task object is in
-    Return
-    - True if in list, false otherwise
-    '''
-    @staticmethod 
-    def checkTaskInTList(task,taskList):
-        for t in taskList:
-            if t == None:
-                continue
-            if task == t:
-                return True
-        return False
+    def rouletteWheelSelection(chromosomeList,sumInvFS):
+        if(sumInvFS == 0):
+            pick = random.randint(0, len(chromosomeList)-1)
+            return chromosomeList[pick]
+        else:
+            pick = random.uniform(0, sumInvFS)
+            current = 0
+            for chromosome in chromosomeList:
+                current += chromosome.inverseFitnessScore
+                if current > pick:
+                    return chromosome
 
+    @staticmethod #prevents python from passing self instance
+    def selectElitePopulation(chromosomeList, numberOfChromosomesToSelect):
+        indexs = sorted(range(len(chromosomeList)), key=lambda i: chromosomeList[i].fitnessScore)[-numberOfChromosomesToSelect:]
+        eliteChromosomes = []
+        for i in range(0,numberOfChromosomesToSelect):
+            eliteChromosomes.append(chromosomeList[indexs[i]])
 
-####### CROSSOVER IMPLEMENTATIONS #######
+        return eliteChromosomes
+
+    ####### CROSSOVER IMPLEMENTATIONS #######
     '''
     Args
     - taskDict1: chrom. dictionary that maps tasks to its priority (Obj -> int)
@@ -69,7 +48,7 @@ class Crossovers(object):
     - New taskDict with the crossover of taskDict1 and taskDict2
     '''
     @classmethod 
-    def OX1(cls, taskDict1, taskDict2, partition1=None, partition2= None):
+    def OX1Cross(cls, taskDict1, taskDict2, partition1=None, partition2= None):
         
     ### Verification
         if not isinstance(taskDict1, dict): raise ValueError('Dict 1 not a dict!')
@@ -140,7 +119,7 @@ class Crossovers(object):
     - New taskDict with the crossover of taskDict1 and taskDict2
     '''
     @classmethod 
-    def OX2(cls, taskDict1, taskDict2, numPositions=0, positionList=None):
+    def OX2Cross(cls, taskDict1, taskDict2, numPositions=0, positionList=None):
         ## Verification and Cleanup
         # Type checking
         if not isinstance(taskDict1, dict): raise ValueError('Dict 1 not a dict!')
@@ -223,8 +202,62 @@ class Crossovers(object):
     - New taskDict with the crossover of taskDict1 and taskDict2
     '''
     @classmethod 
-    def POS(cls, taskDict1, taskDict2, numPositions=0, positionList=None):
+    def POSCross(cls, taskDict1, taskDict2, numPositions=0, positionList=None):
         pass # TODO later
+
+    
+    
+    ######### HELPER FUNCTIONS #########
+    ''' (For OX1)
+    Args
+    - mini: minimum value in partition range
+    - maxi: maximum value in partition range
+    - n: number of partitions to return
+    Return
+    - list of partition indexes in increasing order
+    '''
+    @staticmethod #prevents python from passing self instance
+    def generateRandIdxList(mini,maxi,n):
+        if n >= maxi-mini:
+            return range(mini,maxi+1)
+        partitions = []
+        while len(partitions) < n:
+            ri = random.randint(mini,maxi)
+            if ri not in partitions:
+                partitions.append(ri)
+        return sorted(partitions)
+    '''
+    Args
+    - taskDict: dictionary that maps tasks to their order index / priority
+    Return
+    - List of tasks where its index indicates its priority
+    '''
+    @staticmethod 
+    def dictToList(taskDict):
+        taskList = len(taskDict)*[None]
+        for k,v in taskDict.items():
+            if v > len(taskDict) - 1:
+                raise ValueError('Dictionary value incorrect! You have'
+                ' index %d in %d number of items' % (v,len(taskDict)))
+            taskList[v] = k
+        if None in taskList:
+            raise ValueError('Dictionary mapping is incorrect!')
+        return taskList
+    '''
+    Args
+    - task: task object 
+    - taskList: list to check if task object is in
+    Return
+    - True if in list, false otherwise
+    '''
+    @staticmethod 
+    def checkTaskInTList(task,taskList):
+        for t in taskList:
+            if t == None:
+                continue
+            if task == t:
+                return True
+        return False
 
 
 ## ======================================================================== ##
@@ -258,7 +291,7 @@ def testOX1():
             taskObj('5'):4,taskObj('6'):5,taskObj('7'):6,taskObj('8'):7}
     TD2 = {taskObj('2'):0,taskObj('4'):1,taskObj('6'):2,taskObj('8'):3,
             taskObj('7'):4,taskObj('5'):5,taskObj('3'):6,taskObj('1'):7}
-    newTD1, newTD2 = Crossovers.OX1(TD1,TD2,partition1=2,partition2=5)
+    newTD1, newTD2 = ChangeChromosomes.OX1(TD1,TD2,partition1=2,partition2=5)
     test1,test2 = [],[]
     for (k1,v1),(k2,v2) in zip(newTD1.items(),newTD2.items()):
         test1.append((k1.name,v1))
@@ -276,7 +309,7 @@ def testOX2():
     TD2 = {taskObj('2'):0,taskObj('4'):1,taskObj('6'):2,taskObj('8'):3,
             taskObj('7'):4,taskObj('5'):5,taskObj('3'):6,taskObj('1'):7}
     
-    newTD1, newTD2 = Crossovers.OX2(TD1,TD2,positionList=[1,2,5])
+    newTD1, newTD2 = ChangeChromosomes.OX2(TD1,TD2,positionList=[1,2,5])
     test1,test2 = [],[]
     for (k1,v1),(k2,v2) in zip(newTD1.items(),newTD2.items()):
         test1.append((k1.name,v1))

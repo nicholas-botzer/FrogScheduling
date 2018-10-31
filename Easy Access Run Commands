@@ -14,7 +14,14 @@ Optional Arguments
 
 For FROG (2_25_25 Config, 20 gens, 30 chrom) -> frogbase_results.csv
 
-python3 simulate.py --schedNames FROG.py simso.schedulers.EDF --configFileNames config_2_25_25.xml --numGen 20 --numChrom 30 -ESC .1 .5 .4 --mutRate 1.5 --resultsFN frogbase_results.csv
+python3 simulate.py --schedNames FROG.py --configFileNames config_2_50_0.xml --numGen 20 --numChrom 100 -ESC .1 .5 .4 --mutRate .8 --resultsFN frogbase_results.csv
+python3 simulate.py --schedNames FROG.py --configFileNames config_2_25_25.xml --numGen 20 --numChrom 100 -ESC .1 .5 .4 --mutRate .8 --resultsFN frogbase_results.csv
+
+
 python3 simulate.py --numGen 20 --numChrom 30 -ESC .1 .5 .4 --mutRate 1.5 --resultsFN frogbase_results.csv
 
+python3 simulate.py --numGen 30 --numChrom 30 -ESC .1 .5 .4 --mutRate 0.5 --resultsFN ./results/GAresults_30_30_154_05.csv -l 10
+
 ==============================================================
+Graphing Runs (2_25_25 with different mutation rates)
+python3 simulate.py --schedNames FROG.py --configFileNames config_2_25_25.xml --numGen 20 --numChrom 100 -ESC .1 .5 .4 --mutRate .5 --resultsFN ./results/mr_tests.csv

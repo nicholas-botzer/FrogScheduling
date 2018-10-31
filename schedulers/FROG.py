@@ -4,7 +4,7 @@ Implementation of the Frog Scheduling genetic algorithm
 from collections import defaultdict
 from simso.core import Scheduler
 from simso.schedulers import scheduler
-from tools.ga.crossovers import Crossovers
+from tools.ga.change_chromosomes import ChangeChromosomes
 
 import sys, logging
 logger = logging.getLogger('root')
@@ -104,4 +104,4 @@ class FROG(Scheduler):
         self.chromosome = chromosome
 
     def getTaskPriority(self, task):
-        return self.chromosome.taskToPriorityDict[task.name]
+        return self.chromosome.taskNameToPriority[task.name]
