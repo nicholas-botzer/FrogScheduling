@@ -9,6 +9,7 @@ from tools.results import Results
 logging.basicConfig(format='%(message)s')
 logger = logging.getLogger('root')
 SIMMOD_TO_SCHEDFILE = {'FROG.py':'ga_simulator'}
+organism = None
 
 def main(args):
 
@@ -35,7 +36,10 @@ def main(args):
                     '\n===================================================\n\n')
             args.currentConfigIdx = cidx
             args.currentSchedIdx = sidx
-            importedSimMod.main(args)
+
+            # Run
+            global organism
+            organism = importedSimMod.main(args)
 
 #### HELPER FUNCTIONS ###  
 
@@ -91,7 +95,8 @@ def check_args(args):
         tot += num
     assert tot==1.0, 'ESC must sum to 100'
     assert args.mutRate > 0, 'Mutation rate (%.2f) invalid' % args.mutRate
-    assert args.numChrom > 0, 'Number of chromosomes (%d) invalid' % args.numGen
+    assert args.numChrom > 0, 'Number of chromosomes (%d) invalid' % args.numChrom
+    assert args.numChrom%2 == 0, 'Number of chromosomes (%d) should be even' % args.numChrom
     assert args.numGen > 0, 'Number of generations (%d) invalid' % args.numGen
 
     # Check and manage module names

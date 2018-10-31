@@ -24,4 +24,14 @@ python3 simulate.py --numGen 30 --numChrom 30 -ESC .1 .5 .4 --mutRate 0.5 --resu
 
 ==============================================================
 Graphing Runs (2_25_25 with different mutation rates)
-python3 simulate.py --schedNames FROG.py --configFileNames config_2_25_25.xml --numGen 20 --numChrom 100 -ESC .1 .5 .4 --mutRate .5 --resultsFN ./results/mr_tests.csv
+python3 -i simulate.py --schedNames FROG.py --configFileNames config_2_25_25.xml --numGen 20 --numChrom 100 -ESC .1 .5 .4 --mutRate .5 --resultsFN ./results/mr_tests.csv
+python3 -i simulate.py --schedNames FROG.py --configFileNames config_2_25_25.xml --numGen 20 --numChrom 100 -ESC .1 .5 .4 --mutRate 1 --resultsFN ./results/mr_tests.csv
+python3 -i simulate.py --schedNames FROG.py --configFileNames config_2_25_25.xml --numGen 30 --numChrom 100 -ESC .1 .5 .4 --mutRate 1.5 --resultsFN ./results/mr_tests.csv
+python3 -i simulate.py --schedNames FROG.py --configFileNames config_2_25_25.xml --numGen 30 --numChrom 100 -ESC .1 .5 .4 --mutRate 1 --resultsFN ./results/mr_tests.csv
+python3 -i simulate.py --schedNames FROG.py --configFileNames config_2_25_25.xml --numGen 40 --numChrom 100 -ESC .1 .5 .4 --mutRate .5 --resultsFN ./results/mr_tests.csv
+
+python3 -i simulate.py --schedNames FROG.py --configFileNames config_2_20_0.xml --numGen 50 --numChrom 100 -ESC .1 .5 .4 --mutRate .8 --resultsFN ./results/tmp.csv
+
+
+
+

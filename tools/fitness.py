@@ -31,7 +31,7 @@ class Fitness:
         s = (f"{self.metricToVal['Total Exceeded Count'][-1]},"
              f"{self.metricToVal['Total Preemptions'][-1]},"
              f"{self.metricToVal['Total Migrations'][-1]},"
-             f"{self.metricToVal['Noramlized Laxity'][-1]},"
+             f"{self.metricToVal['Normalized Laxity'][-1]},"
              f"{self.metricToVal['Schedule Overhead'][-1]},"
              f"{self.metricToVal['Activate Overhead'][-1]}")
         return s
@@ -51,6 +51,9 @@ class Fitness:
         return self.metricToVal['Total Preemptions'][-1]
     def getExceededCount(self):
         return self.metricToVal['Total Exceeded Count'][-1]
+    def getNormalizedLaxity(self):
+        return self.metricToVal['Normalized Laxity'][-1]
+    
 
 
     @staticmethod

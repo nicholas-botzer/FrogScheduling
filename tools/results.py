@@ -2,6 +2,7 @@ from simso.core import Model
 import os
 import matplotlib.pyplot as plt
 import numpy as np
+import pickle
 
 class Results():
 
@@ -48,21 +49,31 @@ class Results():
 
 
     @staticmethod
-    def outputStatsForRun(outputPath, configuration, scheduler, organism):
-        
+    def outputStatsForRun(organism):
+        with open('organism.pkl','wb') as f:
+            pickle.dump(organism, f)
+
+        # grab metadata
+        outputPath = organism.metadataDict['ResultsFile']
+        configuration = organism.metadataDict['ConfigFile']
+        scheduler = organism.metadataDict['SchedulerName']
+
+        # setup output file
         outputFile = None
-        if(os.path.exists(outputPath)):
+        if(os.path.exists(outputPath)): # if file exists, append
             outputFile = open(outputPath, 'a')
         else:
-            outputFile = open(outputPath, 'w+')
+            outputFile = open(outputPath, 'w+') # if doesn't exist make new one
             headerString = "Generation,Deadlines Missed,Preemptions,Migrations,Fitness Score\n"
             outputFile.write(headerString)
         
+        # write metadata to line in output file
         outputFile.write(f'{configuration},{scheduler},'
          f'TotalChrom{organism.numberOfChromosomes},MR{organism.mutationRate}\n')
         
         fsData = []
-        for idx,bestChrom in enumerate(organism.optimalChromList):
+        for idx,bestChromList in enumerate(organism.optimalChromList):
+            bestChrom = bestChromList[0]
             gen = idx+1
             dm = bestChrom.fitness.metricToVal['Total Exceeded Count'][idx]
             pr = bestChrom.fitness.metricToVal['Total Preemptions'][idx]

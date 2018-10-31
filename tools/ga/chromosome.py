@@ -3,6 +3,11 @@ from tools.fitness import Fitness
 class Chromosome:
 
     def __init__(self, taskList, name='Noname'):
+        self.statsDict = {
+            'PriorityDictList': [],
+            'RankList': [],
+            'OpsList': []
+        }
         self.priorityDictList = [] # holds dicts that maps taskName to priority
         self.taskNameToPriority = dict(zip(
                                     [t.name for t in taskList],
@@ -11,16 +16,18 @@ class Chromosome:
         self.name = name
 
     def __str__(self):
-        return str(self.name)
+        return f"Chrom{self.name}"
 
     def __repr__(self):
-        return str(self.name)
+        return self.__str__()
     
     def saveCurrentPriorityDict(self):
-        self.priorityDictList.append(self.taskNameToPriority)
-
+        self.statsDict['PriorityDictList'].append(self.taskNameToPriority)
     def setNewPriorityDict(self,newDict):
         self.taskNameToPriority = newDict
+    def addRank(self,newRank):
+        self.statsDict['RankList'].append(newRank)
+    
     
     # def updateTaskListWithLists(self, tasklist, prioritylist):
     #     for 

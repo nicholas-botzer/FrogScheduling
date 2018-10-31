@@ -10,13 +10,25 @@ is created for each config run.
 """
 class Organism:
 
-    def __init__(self, taskList, numberOfChromosomes=10, 
+    def __init__(self, args, taskList, numberOfChromosomes=10, 
         crossoverTechnique=None, shuffleTaskPriority=True, elitePercent=0.10,
-        selectionPercent=0.50, crossOverPercent=0.40, mutationRate=0.01, 
-        configFile='Not Available',):
-        self.configFile = configFile
+        selectionPercent=0.50, crossOverPercent=0.40, mutationRate=0.01):
+
+        self.metadataDict = {
+            'ConfigFile' : args.configFileNames[args.currentConfigIdx],
+            'ResultsFile' : args.resultsFN,
+            'SchedulerName' : args.schedNames[args.currentSchedIdx] 
+        }
+        self.avgFitnessDict = {
+            'ExceededCount' : [], 
+            'Preemptions' : [], 
+            'Migrations' : [],
+            'NormalizedLaxity' : [],
+            'FitnessScore' : []
+        }
         self.chromList = []
         self.optimalChromList = []
+
         self.currentGen = 0
 
         self.numTasks = len(taskList)
@@ -46,14 +58,15 @@ class Organism:
     executing one generation. TASKS here include:
         1. Invokes select, crossover, mutate to get new chromList
         2. Archiving old priority lists in each chrom and putting in the new list
-    (NOTE: Make sure new dicts don't override or modify old dict objects)
+        3. Saves statistics into chromosome stats data structures
+    (NOTE: Make sure new dicts don't modify old dict objects)
     '''
-    def goNextGen(self,bestChromList=None):
-        # Archive current priority dict
-        self.saveAllPriorityDicts()
-        if bestChromList is None:
-            bestChromList = self.getSortedChromList()
-        self.optimalChromList.append(bestChromList[0])
+    def goNextGen(self,bestChromList):
+        # Archive current priority dict and create empty lists for ops
+        self.saveAllPriorityDictsAndInstantiateChromOpLists()
+        self.optimalChromList.append(bestChromList)
+        self.currentEliteSet = set(bestChromList[:self.numOfEliteChromosomes])
+        
         # Calculate inverse fitness and get max
         maxFitness = float(max([c.fitness.getFitnessScore() for c in self.chromList]))
         sumInvFS = 0.0
@@ -61,13 +74,11 @@ class Organism:
             invScore = (maxFitness - c.fitness.getFitnessScore()) + 1
             c.inverseFitnessScore = invScore
             sumInvFS += invScore
-        self.eliteSet = set(bestChromList[:self.numOfEliteChromosomes])
-        logger.log(10, 'Elite: ' + str(bestChromList[:self.numOfEliteChromosomes]))
-        # print('best chrom list before entering select:',bestChromList)
+        logger.log(10, '\nElite: ' + str(bestChromList[:self.numOfEliteChromosomes]))
+        
+        # SELECT / CROSSOVER / MUTATE
         self.select(bestChromList[self.numOfEliteChromosomes:], sumInvFS)
-        # CROSSOVER
-        self.crossover(self.eliteSet, self.chromList, sumInvFS)
-        # General Mutate
+        self.crossover(self.currentEliteSet, self.chromList, sumInvFS)
         self.mutateChromosomes(self.chromList,mr=self.mutationRate)
         
         self.currentGen += 1
@@ -96,7 +107,7 @@ class Organism:
         for _ in range(self.numOfCrossOverChromosomes):
             C1 = ChangeChromosomes.rouletteWheelSelection(fullList,sumInvFS)
             C2 = C1
-            while(C2 is C1):
+            while(C2 is C1 or C2 is None):
                 C2 = ChangeChromosomes.rouletteWheelSelection(fullList,sumInvFS)
 
             C1dict, C2dict = C1.taskNameToPriority, C2.taskNameToPriority
@@ -105,9 +116,11 @@ class Organism:
             if C1 not in chosenSet:
                 logger.log(5,f"Setting new dict to {C1.name}")
                 C1.taskNameToPriority = newC1dict
+                C1.statsDict['OpsList'][-1].append(f'Crossed {C1.name} {C2.name}')
             if C2 not in chosenSet:
                 logger.log(5,f"Setting new dict to {C2.name}")
                 C2.taskNameToPriority = newC2dict
+                C2.statsDict['OpsList'][-1].append(f'Crossed {C1.name} {C2.name}')
 
     '''
     Assigns current chromosome priority dict to new mutated dict.
@@ -119,22 +132,25 @@ class Organism:
                 maxr = int(self.numTasks*0.05) if int(self.numTasks*0.05) > 2 else 2
                 numruns = random.randint(1,maxr)
                 newDict = dict(chromosome.taskNameToPriority)
-                if chromosome in self.eliteSet:
+                if chromosome in self.currentEliteSet:
                     logger.log(10,f"\t-----> MUTATING ELITE CHROMOSOME ({chromosome.name})")
                 for run in range(numruns):
                     k1,k2 = random.sample(list(newDict), 2)
                     newDict[k1], newDict[k2] = newDict[k2], newDict[k1]
                     logger.log(10,f"Mutating k1({k1}) and k2({k2}) in" \
                         f" chromosome ({chromosome.name})")
+                    chromosome.statsDict['OpsList'][-1].append(f'Mutated {k1} {k2}')
                 chromosome.taskNameToPriority = newDict
 
 
     '''
-    Saves current priority dictionaries for all chromosomes.
+    1. Saves current priority dictionaries for all chromosomes.
+    2. Adds empty lists to stats['OpsList'] to store so that cross/mutate can record.
     '''
-    def saveAllPriorityDicts(self):
+    def saveAllPriorityDictsAndInstantiateChromOpLists(self):
         for chrom in self.chromList:
             chrom.saveCurrentPriorityDict()
+            chrom.statsDict['OpsList'].append([])
 
 
     ############### STATISTICS FUNCTIONALITY ############# 
