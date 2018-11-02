@@ -58,6 +58,9 @@ def parse_args():
     parser.add_argument('--configFileNames', metavar='config_file_name',
                         help='Specify the name of the config file.',
                         type=str, nargs='+')
+    parser.add_argument('--pklFileName', metavar='pkl_file_name',
+                        help='Specify the name of the pkl file.',
+                        type=str, default='organismObj.pkl')
     parser.add_argument('--numGen', metavar='N',
                         help='Specify the number of generations to train for.',
                         type=int,default=100)
@@ -139,6 +142,10 @@ def check_args(args):
                                     'ConfigurationFiles', filename))
         args.configFileNames = configFileNames
     args.configPaths = configPaths
+
+    # Add pickle and csv path
+    args.pklFilePath = os.path.join(currPath,'results','pkl',args.pklFileName)
+    args.resultsFilePath = os.path.join(currPath,'results',args.resultsFN)
 
     # simMod = importlib.util.find_spec(f'simulators.{args.simModuleName}')
     # assert simMod is not None, f'Simulator module {args.simModuleName} does not exist.'

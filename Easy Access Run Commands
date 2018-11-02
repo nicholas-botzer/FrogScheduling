@@ -12,7 +12,10 @@ Optional Arguments
     --log, -l
 
 
-For FROG (2_25_25 Config, 20 gens, 30 chrom) -> frogbase_results.csv
+BASE TEST 
+
+python3 -i simulate.py --schedNames FROG.py --configFileNames baseTest.xml --pklFileName baseOrg.pkl --numGen 5 --numChrom 10 -ESC .1 .5 .4 --mutRate .8 --resultsFN baseResults.csv
+==================
 
 python3 simulate.py --schedNames FROG.py --configFileNames config_2_50_0.xml --numGen 20 --numChrom 100 -ESC .1 .5 .4 --mutRate .8 --resultsFN frogbase_results.csv
 python3 simulate.py --schedNames FROG.py --configFileNames config_2_25_25.xml --numGen 20 --numChrom 100 -ESC .1 .5 .4 --mutRate .8 --resultsFN frogbase_results.csv

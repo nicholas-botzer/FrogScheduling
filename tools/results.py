@@ -49,12 +49,12 @@ class Results():
 
 
     @staticmethod
-    def outputStatsForRun(organism):
-        with open('organism.pkl','wb') as f:
+    def outputStatsForRun(organism,fn):
+        with open(fn,'wb') as f:
             pickle.dump(organism, f)
 
         # grab metadata
-        outputPath = organism.metadataDict['ResultsFile']
+        outputPath = organism.metadataDict['ResultsFilePath']
         configuration = organism.metadataDict['ConfigFile']
         scheduler = organism.metadataDict['SchedulerName']
 

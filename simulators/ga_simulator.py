@@ -84,7 +84,7 @@ def main(args):
         organism.goNextGen(bestChromList=bestChromList)
         logger.log(15,f"\n(Organism & Chromosome overhead: {time.time()-runEndTime:.2f} secs)")
 
-    Results.outputStatsForRun(organism)
+    Results.outputStatsForRun(organism,args.pklFilePath)
     return organism
     
 

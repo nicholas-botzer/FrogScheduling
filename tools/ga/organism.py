@@ -16,7 +16,7 @@ class Organism:
 
         self.metadataDict = {
             'ConfigFile' : args.configFileNames[args.currentConfigIdx],
-            'ResultsFile' : args.resultsFN,
+            'ResultsFilePath' : args.resultsFilePath,
             'SchedulerName' : args.schedNames[args.currentSchedIdx] 
         }
         self.avgFitnessDict = {
