@@ -1,4 +1,5 @@
 from simso.core import Model
+from tools.fitness import Fitness
 import os
 import matplotlib.pyplot as plt
 import numpy as np
@@ -16,28 +17,39 @@ class Results():
     def setOptimalChromosome(self, optimalChromosome):
         self.optimalChromosome = optimalChromosome
 
-    def createOutputFile(self, outputPath, configuration, scheduler,
-                         fitness, GA=False):
+    @staticmethod
+    def outputDefResults(args,model):
+        
+        ### Grab Metadata
+        outputPath = args.resultsFilePath
+        configuration = args.configFileNames[args.currentConfigIdx]
+        scheduler = args.schedNames[args.currentSchedIdx]
 
         if(os.path.exists(outputPath)):
             outputFile = open(outputPath, 'a')
-        
         if(not os.path.exists(outputPath)):
+            headerString = ('Configuration,'
+                            'Scheduler,'
+                            'Deadlines Exceeded,'
+                            'Pre-emptions,'
+                            'Migrations,'
+                            'NormalizeLaxity,'
+                            'FitnessScore,'
+                            'Scheduler Overhead,' 
+                            'Activate Overhead\n')
             outputFile = open(outputPath, 'w+')
-            headerString = "Configuration,Scheduler,FitnessScore," \
-                "Deadlines Exceeded,Pre-emptions,Migrations,NormalizeLaxity," \
-                "Scheduler Overhead, Activate Overhead \n"
             outputFile.write(headerString)
 
-        #Non GA techniques
-        if(not GA):
-            resultString = f"{configuration},{scheduler},," + \
-                           fitness.getFitnessCSVStr()
-        else:
-            resultString =  f"{configuration},{scheduler}," + \
-                            f"{self.optimalChromosome.fitnessScore}," + \
-                            fitness.getFitnessCSVStr()
-        
+        de = model.results.total_exceeded_count
+        pre = model.results.total_preemptions
+        mig = model.results.total_migrations
+        nl = Fitness.getAverageNormalizedLaxity(model)
+        fs = Fitness.getFitnessScore(de,pre,mig)
+        so = model.results.scheduler.schedule_overhead
+        ao = model.results.scheduler.activate_overhead
+
+        resultString = (f'{configuration},{scheduler}'
+                         f'{de},{pre},{mig},{nl},{fs},{so},{ao}\n')
         outputFile.write(resultString)
 
 
@@ -49,8 +61,8 @@ class Results():
 
 
     @staticmethod
-    def outputStatsForRun(organism,fn):
-        with open(fn,'wb') as f:
+    def outputStatsForRun(organism,args):
+        with open(args.pklFilePath,'wb') as f:
             pickle.dump(organism, f)
 
         # grab metadata
