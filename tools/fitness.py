@@ -40,9 +40,9 @@ class Fitness:
     Returns various metrics given recent data...
     '''
     def calculateFitnessScore(self):
-        fs = self.metricToVal['Total Exceeded Count'][-1] * 50 + \
-             self.metricToVal['Total Preemptions'][-1]
-        return fs
+        return Fitness.getFitnessScore(self.metricToVal['Total Exceeded Count'][-1],
+                                       self.metricToVal['Total Preemptions'][-1],
+                                       self.metricToVal['Total Migrations'][-1])
     def getFitnessScore(self):
         return self.metricToVal['Fitness Score'][-1]
     def getMigrations(self):
@@ -54,7 +54,10 @@ class Fitness:
     def getNormalizedLaxity(self):
         return self.metricToVal['Normalized Laxity'][-1]
     
-
+    @staticmethod
+    def getFitnessScore(exceededCount,preemptions,migrations):
+        score = exceededCount*50 + preemptions + migrations
+        return score
 
     @staticmethod
     def getAverageNormalizedLaxity(model):

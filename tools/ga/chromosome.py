@@ -12,6 +12,7 @@ class Chromosome:
         self.taskNameToPriority = dict(zip(
                                     [t.name for t in taskList],
                                     range(len(taskList))))
+
         self.fitness = Fitness()
         self.name = name
 

@@ -38,8 +38,7 @@ def main(args):
             args.currentSchedIdx = sidx
 
             # Run
-            global organism
-            organism = importedSimMod.main(args)
+            importedSimMod.main(args)
 
 #### HELPER FUNCTIONS ###  
 
@@ -145,6 +144,7 @@ def check_args(args):
 
     # Add pickle and csv path
     args.pklFilePath = os.path.join(currPath,'results','pkl',args.pklFileName)
+    print(currPath,args.resultsFN)
     args.resultsFilePath = os.path.join(currPath,'results',args.resultsFN)
 
     # simMod = importlib.util.find_spec(f'simulators.{args.simModuleName}')

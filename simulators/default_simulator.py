@@ -16,20 +16,15 @@ def main(args):
     configuration = Configuration(configPath)
     configuration.check_all()
 
-    results = Results()
-
     # Init a model from the configuration.
     model = Model(configuration)
 
     # Execute the simulation.
     model.run_model()
 
-    # Debug.printGanttPerCPU(model.scheduler.ganttData)
-    # print(args)
-    # results.createOutputFile(args.resultsFN,
-    #         args.configFileNames[args.currentConfigIdx],
-    #         args.schedNames[args.currentSchedIdx], 
-    #         model)
+    # Write results to csv file
+    Results.outputDefResults(args,model)
+
 
 if __name__ == '__main__':
     main(sys.argv)

@@ -1,7 +1,5 @@
 If custom scheduler put down the filename.py else put down the algorithm module name.
-FROG.py
 simso.schedulers.EDF
-END
 simso.schedulers.EPDF
 simso.schedulers.RM
 simso.schedulers.LLF
