@@ -211,6 +211,66 @@ class ChangeChromosomes:
         return newTaskDict1, newTaskDict2
 
     '''
+    Args
+    - taskDict1: chrom. dictionary that maps tasks to its priority (Obj -> int)
+    - taskDict2: chrom. dictionary that maps tasks to its priority (Obj -> int)
+    - numPositions: optionally indicate the number of positions to generate
+    - positionList: optionally indicate a custom position list
+    Return
+    - New taskDict with the crossover of taskDict1 and taskDict2
+    '''
+    @classmethod
+    def POSCross(cls, taskDict1, taskDict2, numPositions=0, positionList=None):
+        ## Verification and Cleanup
+        # Type checking
+        if not isinstance(taskDict1, dict): raise ValueError('Dict 1 not a dict!')
+        if not isinstance(taskDict2, dict): raise ValueError('Dict 2 not a dict!')
+        if not isinstance(numPositions, int): 
+            raise ValueError('Number of positions is not an int!')
+        if positionList and not isinstance(positionList, list):
+            raise ValueError('Position list is not a list!')
+        # Value checking
+        if len(taskDict1) != len(taskDict2):
+            raise ValueError('Dictionary sizes don\'t match!')
+        if numPositions > len(taskDict1):
+            raise ValueError('Number of positions is greater than total items!')
+        if positionList: #cleanup duplicates/sort
+            positionList = sorted(list(set(positionList)))
+            if len(positionList) > len(taskDict1):
+                raise ValueError('Number of positions is greater than total items!')
+            for pos in positionList:
+                if pos >= len(taskDict1):
+                    raise ValueError('Given invalid position!')
+
+        ## Get positions list and partial new task lists
+        numTasks = len(taskDict1)
+        taskList1 = cls.dictToList(taskDict1)
+        taskList2 = cls.dictToList(taskDict2)
+        newTaskList1, newTaskList2 = list(taskList1), list(taskList2) #copy
+        if positionList == None or len(positionList) == 0:
+            if numPositions == 0:
+                positionList = cls.generateRandIdxList(0,numTasks-1,
+                    random.randint(int(numTasks/5),int(4*numTasks/5)))
+            else:
+                positionList = cls.generateRandIdxList(0,numTasks-1,
+                    numPositions)
+        for pos in positionList:
+            taskinP1, taskinP2 = taskList1[pos], taskList2[pos]
+            for idx, (t1, t2) in enumerate(zip(taskList1,taskList2)):
+                t1done,t2done = False,False
+                if t2 == taskinP1:
+                    newTaskList2[idx] = None
+                    t2done = True
+                if t1 == taskinP2:
+                    newTaskList1[idx] = None
+                    t1done = True
+                if t1done and t2done:
+                    break
+        
+        ## Crossover
+        TL1idx, TL2idx = 0, 0
+
+    '''
     Position-based crossover operator.
     Args
     - taskDict1: chrom. dictionary that maps tasks to its priority (Obj -> int)
