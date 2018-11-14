@@ -39,6 +39,8 @@ class Organism:
         #cross over returns two chromosomes so we only need half the value for looping
         self.numOfCrossOverChromosomes = round(self.calculateNumberOfChromosomes(crossOverPercent))
         self.mutationRate = mutationRate
+        self.crossover = args.crossover
+        self.selection = args.selection
 
     '''
     Initializes the chromosome's for the GA called by constructor.

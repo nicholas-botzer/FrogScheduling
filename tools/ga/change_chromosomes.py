@@ -221,7 +221,7 @@ class ChangeChromosomes:
     - New taskDict with the crossover of taskDict1 and taskDict2
     '''
     @classmethod 
-    def POSCross(cls, taskDict1, taskDict2, numPositions=0, positionList=None):
+    def customCross(cls, taskDict1, taskDict2, numPositions=0, positionList=None):
         pass # TODO later
 
     

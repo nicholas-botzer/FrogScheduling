@@ -38,8 +38,7 @@ def main(args):
             args.currentSchedIdx = sidx
 
             # Run
-            global organism
-            organism = importedSimMod.main(args)
+            importedSimMod.main(args)
 
 #### HELPER FUNCTIONS ###  
 
@@ -74,6 +73,12 @@ def parse_args():
     parser.add_argument('--mutRate', '-mr', metavar='R',
                         help='Specify the starting mutation rate',
                         type=float,default=1.5)
+    parser.add_argument('--crossover','-c',default='OX2', metavar='str',
+                         help='Specify the crossover to use: OX1, OX2, POS, Custom.',
+                         type=str)
+    parser.add_argument('--selection','-s',default='Roulette', metavar='str',
+                         help='Specify the selection to use: Roulette, Tournament.',
+                         type=str)
     parser.add_argument('--resultsFN', metavar='FN', 
                         help='Specify where to output results stats to.',
                         type=str,default='results')
@@ -145,6 +150,7 @@ def check_args(args):
 
     # Add pickle and csv path
     args.pklFilePath = os.path.join(currPath,'results','pkl',args.pklFileName)
+    print(currPath,args.resultsFN)
     args.resultsFilePath = os.path.join(currPath,'results',args.resultsFN)
 
     # simMod = importlib.util.find_spec(f'simulators.{args.simModuleName}')
