@@ -48,7 +48,7 @@ class Organism:
     def initial_population(self, taskList, shuffle=True):
         for i in range(self.numberOfChromosomes):
             if shuffle:
-                random.shuffle(taskList)
+                random.Random(3).shuffle(taskList)
             chromosome = Chromosome(taskList, name=i)
             self.chromList.append(chromosome)
 
@@ -154,16 +154,6 @@ class Organism:
 
 
     ############### STATISTICS FUNCTIONALITY ############# 
-
-    def normalizeChromosomeFitnessScores(self):
-        #normalize fitness scores before performing roulette wheel selection
-        highestFitnessScore = max(self.chromosomeList, key = lambda x: (x.fitnessScore)).fitnessScore
-
-        #If all fitness scores are not equal need to normalize before roulette wheel selection
-        if not all(x.fitnessScore == self.chromosomeList[0].fitnessScore for x in self.chromosomeList):
-            for chromosome in self.chromosomeList:
-                chromosome.fitnessScore = highestFitnessScore - (chromosome.fitnessScore)
-
 
     def calculateNumberOfChromosomes(self, percent):
         return round(self.numberOfChromosomes * percent)

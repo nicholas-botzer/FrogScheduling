@@ -27,6 +27,25 @@ class ChangeChromosomes:
                 current += chromosome.inverseFitnessScore
                 if current > pick:
                     return chromosome
+    '''
+    Performs a tournament selection amongst k chromosomes and chooses the best
+    Args:
+    -chromosomeList: List of chromosomes
+    Return:
+    -Chromosome: the winning chromosome
+    '''
+    @staticmethod
+    def tournamentSelection(chromosomeList, k):
+        tournamentChromosomes = ChangeChromosomes.selectRandom(chromosomeList,k)
+        winnerChromosome = max(tournamentChromosomes, key= lambda x: x.fitness.getFitnessScore())
+        return winnerChromosome
+
+    '''
+    Randomly chooses k elements from a list
+    '''
+    @staticmethod
+    def selectRandom(chromosomeList, k):
+        return [random.choice(chromosomeList) for x in range(k)]
 
     @staticmethod #prevents python from passing self instance
     def selectElitePopulation(chromosomeList, numberOfChromosomesToSelect):
