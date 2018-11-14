@@ -48,3 +48,11 @@ python3 simulate.py --configFileNames config_2_0_50.xml --resultsFN br_2_0_50.cs
 python3 simulate.py --configFileNames config_4_25_25.xml --resultsFN br_4_25_25.csv
 python3 simulate.py --configFileNames config_4_50_0.xml --resultsFN br_4_50_0.csv
 python3 simulate.py --configFileNames config_4_0_50.xml --resultsFN br_4_0_50.csv
+
+
+-----------------------------------
+Comprehensive Table Run 
+-----------------------------------
+GA
+
+Rest
