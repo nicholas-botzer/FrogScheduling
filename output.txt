@@ -8189,164 +8189,36 @@ Elite: [Chrom62, Chrom15, Chrom82, Chrom78, Chrom80, Chrom77, Chrom36, Chrom47, 
 
 (Organism & Chromosome overhead: 0.01 secs)
 
-===================================================
-Simulating (FROG.py) on config (config_2_25_25.xml) 
-with sim module (ga_simulator).
-Chroms: 100, Gen: 75, ESC: 0.1 0.5 0.4, MR: 0.6
-Selection: Roulette, Crossover: Custom, Keep Elite: False
-===================================================
 
 
-
----------------
-Running generation 1..
-..Gen 1 running complete. (Time: 50.72 secs).
-
-Rank 1 - Fitness: 1865, Migrations: 26, Preemptions: 439, NL: 0.9170, Exceeded Count: 28
-Rank 2 - Fitness: 1865, Migrations: 26, Preemptions: 439, NL: 0.9170, Exceeded Count: 28
-Rank 3 - Fitness: 1941, Migrations: 12, Preemptions: 429, NL: 0.9152, Exceeded Count: 30
-Rank 4 - Fitness: 1941, Migrations: 12, Preemptions: 429, NL: 0.9152, Exceeded Count: 30
-Rank 5 - Fitness: 1980, Migrations: 20, Preemptions: 460, NL: 0.9097, Exceeded Count: 30
-AVERAGE - Fitness: 2860.18, Migrations: 22.4, Preemptions: 425.7, NL: 0.8879, Exceeded Count: 48.2
-
-Elite: [Chrom18, Chrom62, Chrom31, Chrom75, Chrom20, Chrom64, Chrom1, Chrom45, Chrom89, Chrom36]
-Mutating k1(Task 21) and k2(Task 14) in chromosome (0)
-Mutating k1(Task 11) and k2(Task 49) in chromosome (0)
-Mutating k1(Task 16) and k2(Task 32) in chromosome (59)
+Missing name for redirect.
 Traceback (most recent call last):
-  File "simulate.py", line 181, in <module>
-    main( check_args( parse_args() ) )
-  File "simulate.py", line 43, in main
-    importedSimMod.main(args)
-  File "/afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/simulators/ga_simulator.py", line 84, in main
-    organism.goNextGen(bestChromList=bestChromList)
-  File "/afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/tools/ga/organism.py", line 84, in goNextGen
-    self.crossover(self.currentEliteSet, self.chromList, sumInvFS)
-  File "/afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/tools/ga/organism.py", line 119, in crossover
-    newC1dict, newC2dict = ChangeChromosomes.customCross(C1dict,C2dict)
-  File "/afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/tools/ga/change_chromosomes.py", line 311, in customCross
-    if p1partition > len(taskDict1):
-TypeError: '>' not supported between instances of 'NoneType' and 'int'
-
-===================================================
-Simulating (FROG.py) on config (config_2_25_25.xml) 
-with sim module (ga_simulator).
-Chroms: 100, Gen: 75, ESC: 0.1 0.5 0.4, MR: 0.6
-Selection: Roulette, Crossover: Custom, Keep Elite: True
-===================================================
-
-
-
----------------
-Running generation 1..
-..Gen 1 running complete. (Time: 51.21 secs).
-
-Rank 1 - Fitness: 1865, Migrations: 26, Preemptions: 439, NL: 0.9170, Exceeded Count: 28
-Rank 2 - Fitness: 1865, Migrations: 26, Preemptions: 439, NL: 0.9170, Exceeded Count: 28
-Rank 3 - Fitness: 1941, Migrations: 12, Preemptions: 429, NL: 0.9152, Exceeded Count: 30
-Rank 4 - Fitness: 1941, Migrations: 12, Preemptions: 429, NL: 0.9152, Exceeded Count: 30
-Rank 5 - Fitness: 1980, Migrations: 20, Preemptions: 460, NL: 0.9097, Exceeded Count: 30
-AVERAGE - Fitness: 2860.18, Migrations: 22.4, Preemptions: 425.7, NL: 0.8879, Exceeded Count: 48.2
-
-Elite: [Chrom18, Chrom62, Chrom31, Chrom75, Chrom20, Chrom64, Chrom1, Chrom45, Chrom89, Chrom36]
-Mutating k1(Task 8) and k2(Task 48) in chromosome (30)
-Mutating k1(Task 20) and k2(Task 41) in chromosome (30)
-Mutating k1(Task 23) and k2(Task 15) in chromosome (78)
-Mutating k1(Task 18) and k2(Task 24) in chromosome (78)
+  File "simulate.py", line 6, in <module>
+    from simulators import *
+  File "/afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/simulators/__init__.py", line 18, in <module>
+    from schedulers import *
+  File "/afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/schedulers/__init__.py", line 18, in <module>
+    from tools import *
+  File "/afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/tools/__init__.py", line 28, in <module>
+    from schedulers import *
+  File "/afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/schedulers/FROG.py", line 7, in <module>
+    from tools.ga.change_chromosomes import ChangeChromosomes
+  File "/afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/tools/ga/change_chromosomes.py", line 308
+    raise ValueError('Number of positions is greater than total items!')
+        ^
+IndentationError: expected an indented block
 Traceback (most recent call last):
-  File "simulate.py", line 181, in <module>
-    main( check_args( parse_args() ) )
-  File "simulate.py", line 43, in main
-    importedSimMod.main(args)
-  File "/afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/simulators/ga_simulator.py", line 84, in main
-    organism.goNextGen(bestChromList=bestChromList)
-  File "/afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/tools/ga/organism.py", line 84, in goNextGen
-    self.crossover(self.currentEliteSet, self.chromList, sumInvFS)
-  File "/afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/tools/ga/organism.py", line 119, in crossover
-    newC1dict, newC2dict = ChangeChromosomes.customCross(C1dict,C2dict)
-  File "/afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/tools/ga/change_chromosomes.py", line 311, in customCross
-    if p1partition > len(taskDict1):
-TypeError: '>' not supported between instances of 'NoneType' and 'int'
-
-===================================================
-Simulating (FROG.py) on config (config_2_25_25.xml) 
-with sim module (ga_simulator).
-Chroms: 100, Gen: 75, ESC: 0.1 0.5 0.4, MR: 0.6
-Selection: Roulette, Crossover: OX1, Keep Elite: False
-===================================================
-
-
-
----------------
-Running generation 1..
-..Gen 1 running complete. (Time: 45.75 secs).
-
-Rank 1 - Fitness: 1865, Migrations: 26, Preemptions: 439, NL: 0.9170, Exceeded Count: 28
-Rank 2 - Fitness: 1865, Migrations: 26, Preemptions: 439, NL: 0.9170, Exceeded Count: 28
-Rank 3 - Fitness: 1941, Migrations: 12, Preemptions: 429, NL: 0.9152, Exceeded Count: 30
-Rank 4 - Fitness: 1941, Migrations: 12, Preemptions: 429, NL: 0.9152, Exceeded Count: 30
-Rank 5 - Fitness: 1980, Migrations: 20, Preemptions: 460, NL: 0.9097, Exceeded Count: 30
-AVERAGE - Fitness: 2860.18, Migrations: 22.4, Preemptions: 425.7, NL: 0.8879, Exceeded Count: 48.2
-
-Elite: [Chrom18, Chrom62, Chrom31, Chrom75, Chrom20, Chrom64, Chrom1, Chrom45, Chrom89, Chrom36]
-Mutating k1(Task 26) and k2(Task 50) in chromosome (93)
-Mutating k1(Task 9) and k2(Task 18) in chromosome (93)
-
-(Organism & Chromosome overhead: 0.02 secs)
-
----------------
-Running generation 2..
-..Gen 2 running complete. (Time: 45.53 secs).
-
-Rank 1 - Fitness: 1373, Migrations: 19, Preemptions: 404, NL: 0.9245, Exceeded Count: 19
-Rank 2 - Fitness: 1415, Migrations: 17, Preemptions: 448, NL: 0.9299, Exceeded Count: 19
-Rank 3 - Fitness: 1443, Migrations: 30, Preemptions: 413, NL: 0.9221, Exceeded Count: 20
-Rank 4 - Fitness: 1606, Migrations: 20, Preemptions: 436, NL: 0.9123, Exceeded Count: 23
-Rank 5 - Fitness: 1816, Migrations: 24, Preemptions: 442, NL: 0.9157, Exceeded Count: 27
-AVERAGE - Fitness: 2943.97, Migrations: 22.0, Preemptions: 424.0, NL: 0.8868, Exceeded Count: 50.0
-
-Elite: [Chrom2, Chrom89, Chrom73, Chrom95, Chrom41, Chrom75, Chrom93, Chrom20, Chrom64, Chrom31]
-Mutating k1(Task 34) and k2(Task 10) in chromosome (63)
-Mutating k1(Task 35) and k2(Task 6) in chromosome (63)
-Mutating k1(Task 17) and k2(Task 14) in chromosome (37)
-Mutating k1(Task 6) and k2(Task 16) in chromosome (94)
-Mutating k1(Task 2) and k2(Task 41) in chromosome (94)
-
-(Organism & Chromosome overhead: 0.02 secs)
-
----------------
-Running generation 3..
-..Gen 3 running complete. (Time: 45.56 secs).
-
-Rank 1 - Fitness: 1061, Migrations: 16, Preemptions: 445, NL: 0.9438, Exceeded Count: 12
-Rank 2 - Fitness: 1338, Migrations: 22, Preemptions: 466, NL: 0.9278, Exceeded Count: 17
-Rank 3 - Fitness: 1373, Migrations: 19, Preemptions: 404, NL: 0.9245, Exceeded Count: 19
-Rank 4 - Fitness: 1443, Migrations: 30, Preemptions: 413, NL: 0.9221, Exceeded Count: 20
-Rank 5 - Fitness: 1460, Migrations: 25, Preemptions: 435, NL: 0.9314, Exceeded Count: 20
-AVERAGE - Fitness: 2958.45, Migrations: 21.6, Preemptions: 424.9, NL: 0.8866, Exceeded Count: 50.2
-
-Elite: [Chrom56, Chrom25, Chrom2, Chrom73, Chrom41, Chrom34, Chrom22, Chrom65, Chrom93, Chrom20]
-Mutating k1(Task 8) and k2(Task 48) in chromosome (84)
-
-(Organism & Chromosome overhead: 0.02 secs)
-
----------------
-Running generation 4..
-..Gen 4 running complete. (Time: 45.32 secs).
-
-Rank 1 - Fitness: 1373, Migrations: 19, Preemptions: 404, NL: 0.9245, Exceeded Count: 19
-Rank 2 - Fitness: 1460, Migrations: 25, Preemptions: 435, NL: 0.9314, Exceeded Count: 20
-Rank 3 - Fitness: 1607, Migrations: 21, Preemptions: 436, NL: 0.9161, Exceeded Count: 23
-Rank 4 - Fitness: 1635, Migrations: 23, Preemptions: 412, NL: 0.9152, Exceeded Count: 24
-Rank 5 - Fitness: 1803, Migrations: 25, Preemptions: 428, NL: 0.9107, Exceeded Count: 27
-AVERAGE - Fitness: 3093.37, Migrations: 20.9, Preemptions: 422.4, NL: 0.8829, Exceeded Count: 53.0
-
-Elite: [Chrom2, Chrom41, Chrom34, Chrom52, Chrom26, Chrom93, Chrom8, Chrom20, Chrom88, Chrom1]
-Mutating k1(Task 23) and k2(Task 34) in chromosome (32)
-Mutating k1(Task 13) and k2(Task 28) in chromosome (32)
-Mutating k1(Task 9) and k2(Task 49) in chromosome (89)
-
-(Organism & Chromosome overhead: 0.02 secs)
-
----------------
-Running generation 5..
+  File "simulate.py", line 6, in <module>
+    from simulators import *
+  File "/afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/simulators/__init__.py", line 18, in <module>
+    from schedulers import *
+  File "/afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/schedulers/__init__.py", line 18, in <module>
+    from tools import *
+  File "/afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/tools/__init__.py", line 28, in <module>
+    from schedulers import *
+  File "/afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/schedulers/FROG.py", line 7, in <module>
+    from tools.ga.change_chromosomes import ChangeChromosomes
+  File "/afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/tools/ga/change_chromosomes.py", line 308
+    raise ValueError('Number of positions is greater than total items!')
+        ^
+IndentationError: expected an indented block

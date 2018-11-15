@@ -305,7 +305,7 @@ class ChangeChromosomes:
             if p1partition is not isinstance(p1partition, int): 
                 raise ValueError('Number of positions is not an int!')
             if p1partition > len(taskDict1):
-            raise ValueError('Number of positions is greater than total items!')
+                raise ValueError('Number of positions is greater than total items!')
         if positionList and not isinstance(positionList, list):
             raise ValueError('Position list is not a list!')
         # Value checking
