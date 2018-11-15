@@ -39,6 +39,9 @@ class Organism:
         #cross over returns two chromosomes so we only need half the value for looping
         self.numOfCrossOverChromosomes = round(self.calculateNumberOfChromosomes(crossOverPercent))
         self.mutationRate = mutationRate
+        self.crossoverSel = args.crossover
+        self.crossoverKeepElite = args.cke
+        self.selectionSel = args.selection
 
     '''
     Initializes the chromosome's for the GA called by constructor.
@@ -48,7 +51,7 @@ class Organism:
     def initial_population(self, taskList, shuffle=True):
         for i in range(self.numberOfChromosomes):
             if shuffle:
-                random.shuffle(taskList)
+                random.Random(3).shuffle(taskList)
             chromosome = Chromosome(taskList, name=i)
             self.chromList.append(chromosome)
 
@@ -111,16 +114,33 @@ class Organism:
                 C2 = ChangeChromosomes.rouletteWheelSelection(fullList,sumInvFS)
 
             C1dict, C2dict = C1.taskNameToPriority, C2.taskNameToPriority
-            newC1dict, newC2dict = ChangeChromosomes.OX2Cross(C1dict,C2dict)
+
+            if self.crossoverSel == 'Custom':
+                newC1dict, newC2dict = ChangeChromosomes.customCross(C1dict,C2dict)
+            elif self.crossoverSel == 'OX1':
+                newC1dict, newC2dict = ChangeChromosomes.OX1Cross(C1dict,C2dict)
+            elif self.crossoverSel == 'POS':
+                newC1dict, newC2dict = ChangeChromosomes.POSCross(C1dict,C2dict)
+            else:
+                newC1dict, newC2dict = ChangeChromosomes.OX2Cross(C1dict,C2dict)
+            
             logger.log(5,f"{C1.name} and {C2.name} chosen for crossover")
-            if C1 not in chosenSet:
+            if self.crossoverKeepElite:
+                if C1 not in chosenSet:
+                    logger.log(5,f"Setting new dict to {C1.name}")
+                    C1.taskNameToPriority = newC1dict
+                    C1.statsDict['OpsList'][-1].append(f'Crossed {C1.name} {C2.name}')
+                if C2 not in chosenSet:
+                    logger.log(5,f"Setting new dict to {C2.name}")
+                    C2.taskNameToPriority = newC2dict
+                    C2.statsDict['OpsList'][-1].append(f'Crossed {C1.name} {C2.name}')
+            else:
                 logger.log(5,f"Setting new dict to {C1.name}")
                 C1.taskNameToPriority = newC1dict
                 C1.statsDict['OpsList'][-1].append(f'Crossed {C1.name} {C2.name}')
-            if C2 not in chosenSet:
                 logger.log(5,f"Setting new dict to {C2.name}")
                 C2.taskNameToPriority = newC2dict
-                C2.statsDict['OpsList'][-1].append(f'Crossed {C1.name} {C2.name}')
+                C2.statsDict['OpsList'][-1].append(f'Crossed {C1.name} {C2.name}') 
 
     '''
     Assigns current chromosome priority dict to new mutated dict.
@@ -154,16 +174,6 @@ class Organism:
 
 
     ############### STATISTICS FUNCTIONALITY ############# 
-
-    def normalizeChromosomeFitnessScores(self):
-        #normalize fitness scores before performing roulette wheel selection
-        highestFitnessScore = max(self.chromosomeList, key = lambda x: (x.fitnessScore)).fitnessScore
-
-        #If all fitness scores are not equal need to normalize before roulette wheel selection
-        if not all(x.fitnessScore == self.chromosomeList[0].fitnessScore for x in self.chromosomeList):
-            for chromosome in self.chromosomeList:
-                chromosome.fitnessScore = highestFitnessScore - (chromosome.fitnessScore)
-
 
     def calculateNumberOfChromosomes(self, percent):
         return round(self.numberOfChromosomes * percent)

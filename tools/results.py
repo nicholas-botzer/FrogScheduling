@@ -17,6 +17,7 @@ class Results():
     def setOptimalChromosome(self, optimalChromosome):
         self.optimalChromosome = optimalChromosome
 
+    # Called by default runs.
     @staticmethod
     def outputDefResults(args,model):
         
@@ -44,7 +45,7 @@ class Results():
         pre = model.results.total_preemptions
         mig = model.results.total_migrations
         nl = Fitness.getAverageNormalizedLaxity(model)
-        fs = Fitness.getFitnessScore(de,pre,mig)
+        fs = Fitness.getFitnessScoreStatic(de,pre,mig)
         so = model.results.scheduler.schedule_overhead
         ao = model.results.scheduler.activate_overhead
 
@@ -59,7 +60,7 @@ class Results():
         print("Total Pre-emptions: " + str(model.results.total_preemptions))
         print("Total Exceeded Count: " + str(model.results.total_exceeded_count))
 
-
+    # Called by GA runs
     @staticmethod
     def outputStatsForRun(organism,args):
         with open(args.pklFilePath,'wb') as f:
@@ -81,7 +82,8 @@ class Results():
         
         # write metadata to line in output file
         outputFile.write(f'{configuration},{scheduler},'
-         f'TotalChrom{organism.numberOfChromosomes},MR{organism.mutationRate}\n')
+         f'TotalChrom{organism.numberOfChromosomes},MR{organism.mutationRate},'
+         f'{args.selection},{args.crossover},{args.cke}\n')
         
         fsData = []
         for idx,bestChromList in enumerate(organism.optimalChromList):

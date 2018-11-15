@@ -32,7 +32,9 @@ def main(args):
             importedSimMod = importlib.import_module(f"simulators.{simModuleName}")
             logger.log(20,'\n===================================================\n' \
                     f'Simulating ({schedName}) on config ({configFileName}) \nwith' \
-                    f' sim module ({simModuleName})' \
+                    f' sim module ({simModuleName}).\n' \
+                    f'Chroms: {args.numChrom}, Gen: {args.numGen}, ESC: {args.ESCperc[0]} {args.ESCperc[1]} {args.ESCperc[2]}, MR: {args.mutRate}\n' \
+                    f'Selection: {args.selection}, Crossover: {args.crossover}, Keep Elite: {args.cke}' \
                     '\n===================================================\n\n')
             args.currentConfigIdx = cidx
             args.currentSchedIdx = sidx
@@ -73,6 +75,15 @@ def parse_args():
     parser.add_argument('--mutRate', '-mr', metavar='R',
                         help='Specify the starting mutation rate',
                         type=float,default=1.5)
+    parser.add_argument('--crossover','-c',default='OX2', metavar='str',
+                         help='Specify the crossover to use: OX1, OX2, POS, Custom.',
+                         type=str)
+    parser.add_argument('-cke',default=False,
+                         help='Specify if you want to keep elites untouched during crossover.',
+                         action='store_true')
+    parser.add_argument('--selection','-s',default='Roulette', metavar='str',
+                         help='Specify the selection to use: Roulette, Tournament.',
+                         type=str)
     parser.add_argument('--resultsFN', metavar='FN', 
                         help='Specify where to output results stats to.',
                         type=str,default='results')
@@ -144,7 +155,7 @@ def check_args(args):
 
     # Add pickle and csv path
     args.pklFilePath = os.path.join(currPath,'results','pkl',args.pklFileName)
-    print(currPath,args.resultsFN)
+    #print(currPath,args.resultsFN)
     args.resultsFilePath = os.path.join(currPath,'results',args.resultsFN)
 
     # simMod = importlib.util.find_spec(f'simulators.{args.simModuleName}')
