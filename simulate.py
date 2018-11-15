@@ -6,7 +6,7 @@ import simso.schedulers
 from simulators import *
 from tools.results import Results
 
-logging.basicConfig(format='%(message)s')
+logging.basicConfig(stream=sys.stdout,format='%(message)s')
 logger = logging.getLogger('root')
 SIMMOD_TO_SCHEDFILE = {'FROG.py':'ga_simulator'}
 organism = None

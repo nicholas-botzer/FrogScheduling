@@ -1,6 +1,0 @@
-usage: simulate.py [-h] [--schedNames sched_name [sched_name ...]]
-                   [--configFileNames config_file_name [config_file_name ...]]
-                   [--pklFileName pkl_file_name] [--numGen N] [--numChrom N]
-                   [--ESCperc N N N] [--mutRate R] [--resultsFN FN]
-                   [--log [LOG]]
-simulate.py: error: unrecognized arguments: --crossover OX1
