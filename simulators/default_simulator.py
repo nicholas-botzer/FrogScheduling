@@ -11,7 +11,7 @@ logger = logging.getLogger('root')
 Runs EDF (earliest deadline first) scheduling algorithm.
 """
 def main(args):
-    
+
     # Load configuration file and check
     configPath = args.configPaths[args.currentConfigIdx]
     configuration = Configuration(configPath)
@@ -27,7 +27,7 @@ def main(args):
     logger.log(15,"Total Migrations: " + str(model.results.total_migrations))
     logger.log(15,"Total Pre-emptions: " + str(model.results.total_preemptions))
     logger.log(15,"Total Exceeded Count: " + str(model.results.total_exceeded_count))
-    logger.log(15,"Fitness Score: " + str(Fitness.getFitnessScore(
+    logger.log(15,"Fitness Score: " + str(Fitness.getFitnessScoreStatic(
                                           model.results.total_exceeded_count,
                                           model.results.total_preemptions,
                                           model.results.total_migrations)))
