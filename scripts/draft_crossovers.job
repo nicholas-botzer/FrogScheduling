@@ -1,0 +1,16 @@
+#!/bin/csh
+#$ -M yzhang46@nd.edu
+#$ -m abe
+#$ -q long
+#$ -N Simso_Runner_ChromosomesExperiments
+
+module load python/3.6.4
+
+python3 simulate.py --configFileNames baseTest.xml --schedNames FROG.py --numChrom 100 --resultsFN crossTest_ox1.csv --pklFileName crossTest_ox1.pkl --numGen 75 -mr 0.6 --crossover OX1
+
+
+ 
+
+
+
+
