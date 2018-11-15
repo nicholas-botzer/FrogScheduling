@@ -1,0 +1,23 @@
+#!/bin/csh
+#$ -M yzhang46@nd.edu
+#$ -m abe
+#$ -q long
+#$ -N Simso_Runner_ChromosomesExperiments
+#$ -e /afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/selerror.txt
+#$ -o /afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/seloutput.txt
+
+module load python/3.6.4
+
+
+
+python3 simulate.py --configFileNames config_2_25_25.xml --schedNames FROG.py --numChrom 100 --resultsFN selTest_tourn.csv --pklFileName selTest_tourn.pkl --numGen 100 -mr 0.6 --crossover OX2 -cke
+python3 simulate.py --configFileNames config_2_25_25.xml --schedNames FROG.py --numChrom 100 --resultsFN selTest_tournm.csv --pklFileName selTest_tournm.pkl --numGen 100 -mr 0.6 --crossover OX2 -cke -ms
+python3 simulate.py --configFileNames config_2_25_25.xml --schedNames FROG.py --numChrom 100 --resultsFN selTest_rand.csv --pklFileName selTest_rand.pkl --numGen 100 -mr 0.6 --crossover OX2 -cke
+python3 simulate.py --configFileNames config_2_25_25.xml --schedNames FROG.py --numChrom 100 --resultsFN selTest_randm.csv --pklFileName selTest_randm.pkl --numGen 100 -mr 0.6 --crossover OX2 -cke -ms
+python3 simulate.py --configFileNames config_2_25_25.xml --schedNames FROG.py --numChrom 100 --resultsFN selTest_roul.csv --pklFileName selTest_roul.pkl --numGen 100 -mr 0.6 --crossover OX2 -cke
+python3 simulate.py --configFileNames config_2_25_25.xml --schedNames FROG.py --numChrom 100 --resultsFN selTest_roulm.csv --pklFileName selTest_roulm.pkl --numGen 100 -mr 0.6 --crossover OX2 -cke -ms
+
+
+
+
+

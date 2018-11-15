@@ -301,15 +301,17 @@ class ChangeChromosomes:
         # Type checking
         if not isinstance(taskDict1, dict): raise ValueError('Dict 1 not a dict!')
         if not isinstance(taskDict2, dict): raise ValueError('Dict 2 not a dict!')
-        if p1partition is not None and not isinstance(p1partition, int): 
-            raise ValueError('Number of positions is not an int!')
+        if p1partition is not None:
+            if p1partition is not isinstance(p1partition, int): 
+                raise ValueError('Number of positions is not an int!')
+            if p1partition > len(taskDict1):
+            raise ValueError('Number of positions is greater than total items!')
         if positionList and not isinstance(positionList, list):
             raise ValueError('Position list is not a list!')
         # Value checking
         if len(taskDict1) != len(taskDict2):
             raise ValueError('Dictionary sizes don\'t match!')
-        if p1partition > len(taskDict1):
-            raise ValueError('Number of positions is greater than total items!')
+    
         if positionList: #cleanup duplicates/sort
             positionList = sorted(list(set(positionList)))
             if len(positionList) > len(taskDict1):

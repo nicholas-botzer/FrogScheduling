@@ -70,3 +70,11 @@ Comprehensive Table Run
 GA
 
 Rest
+
+
+
+
+
+
+script submission:
+qsub -b /afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/output.txt ./scripts/draft_crossovers.job

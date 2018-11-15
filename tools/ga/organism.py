@@ -42,6 +42,7 @@ class Organism:
         self.crossoverSel = args.crossover
         self.crossoverKeepElite = args.cke
         self.selectionSel = args.selection
+        self.ms = args.ms
 
     '''
     Initializes the chromosome's for the GA called by constructor.
@@ -90,11 +91,18 @@ class Organism:
     def select(self,selChromList,sumInvFS):
         chromosomesSelected = []
         while(len(chromosomesSelected) < self.numOfSelectionChromosomes):
-            chromPicked = ChangeChromosomes.rouletteWheelSelection(
+            if self.selectionSel == 'Tournament':
+                chromPicked = ChangeChromosomes.tournamentSelection(selChromList,1)
+            elif self.selectionSel == 'Random':
+                chromPicked = ChangeChromosomes.selectRandom(selChromList,1)
+            else:
+                chromPicked = ChangeChromosomes.rouletteWheelSelection(
                                                         selChromList,sumInvFS)
+
             if chromPicked not in chromosomesSelected and chromPicked:
                 chromosomesSelected.append(chromPicked)
-        self.mutateChromosomes(chromosomesSelected,mr=self.mutationRate*5)    
+        if self.ms:
+            self.mutateChromosomes(chromosomesSelected,mr=self.mutationRate*5)    
         return chromosomesSelected
 
 

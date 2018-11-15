@@ -5,8 +5,7 @@ import xml.etree.ElementTree as ET
 import simso.schedulers
 from simulators import *
 from tools.results import Results
-
-logging.basicConfig(format='%(message)s')
+logging.basicConfig(stream=sys.stdout,format='%(message)s')
 logger = logging.getLogger('root')
 SIMMOD_TO_SCHEDFILE = {'FROG.py':'ga_simulator'}
 organism = None
@@ -34,7 +33,7 @@ def main(args):
                     f'Simulating ({schedName}) on config ({configFileName}) \nwith' \
                     f' sim module ({simModuleName}).\n' \
                     f'Chroms: {args.numChrom}, Gen: {args.numGen}, ESC: {args.ESCperc[0]} {args.ESCperc[1]} {args.ESCperc[2]}, MR: {args.mutRate}\n' \
-                    f'Selection: {args.selection}, Crossover: {args.crossover}, Keep Elite: {args.cke}' \
+                    f'Selection: {args.selection}, MS: {args.ms}, Crossover: {args.crossover}, Keep Elite: {args.cke}' \
                     '\n===================================================\n\n')
             args.currentConfigIdx = cidx
             args.currentSchedIdx = sidx
@@ -84,6 +83,9 @@ def parse_args():
     parser.add_argument('--selection','-s',default='Roulette', metavar='str',
                          help='Specify the selection to use: Roulette, Tournament.',
                          type=str)
+    parser.add_argument('-ms',default=False,
+                         help='Specify if you want a higher mutation rate for selected chroms.',
+                         action='store_true')
     parser.add_argument('--resultsFN', metavar='FN', 
                         help='Specify where to output results stats to.',
                         type=str,default='results')
