@@ -1,0 +1,25 @@
+#!/bin/csh
+#$ -M yzhang46@nd.edu
+#$ -m abe
+#$ -q long
+#$ -N Simso_Runner_ChromosomesExperiments
+#$ -e /afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/selerror.txt
+#$ -o /afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/seloutput.txt
+
+module load python/3.6.4
+
+
+python3 simulate.py --configFileNames config_2_25_25.xml --schedNames FROG.py --numChrom 100 --resultsFN crossTest_ox1.csv --pklFileName crossTest_ox1.pkl --numGen 75 -mr 0.6 --crossover OX1
+python3 simulate.py --configFileNames config_2_25_25.xml --schedNames FROG.py --numChrom 100 --resultsFN crossTest_ox1e.csv --pklFileName crossTest_ox1e.pkl --numGen 75 -mr 0.6 --crossover OX1 -cke
+python3 simulate.py --configFileNames config_2_25_25.xml --schedNames FROG.py --numChrom 100 --resultsFN crossTest_ox2.csv --pklFileName crossTest_ox1.pkl --numGen 75 -mr 0.6 --crossover OX2
+python3 simulate.py --configFileNames config_2_25_25.xml --schedNames FROG.py --numChrom 100 --resultsFN crossTest_ox2e.csv --pklFileName crossTest_ox2e.pkl --numGen 75 -mr 0.6 --crossover OX2 -cke
+python3 simulate.py --configFileNames config_2_25_25.xml --schedNames FROG.py --numChrom 100 --resultsFN crossTest_pos.csv --pklFileName crossTest_pos.pkl --numGen 75 -mr 0.6 --crossover POS
+python3 simulate.py --configFileNames config_2_25_25.xml --schedNames FROG.py --numChrom 100 --resultsFN crossTest_pose.csv --pklFileName crossTest_pose.pkl --numGen 75 -mr 0.6 --crossover POS -cke
+python3 simulate.py --configFileNames config_2_25_25.xml --schedNames FROG.py --numChrom 100 --resultsFN crossTest_cus.csv --pklFileName crossTest_cus.pkl --numGen 75 -mr 0.6 --crossover Custom
+python3 simulate.py --configFileNames config_2_25_25.xml --schedNames FROG.py --numChrom 100 --resultsFN crossTest_cuse.csv --pklFileName crossTest_cuse.pkl --numGen 75 -mr 0.6 --crossover Custom -cke
+
+
+
+
+
+
