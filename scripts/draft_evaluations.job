@@ -1,0 +1,20 @@
+#!/bin/csh
+#$ -M yzhang46@nd.edu
+#$ -m abe
+#$ -q long
+#$ -N Simso_Runner_ChromosomesExperiments
+#$ -e /afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/evalerror.txt
+#$ -o /afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/evaloutput.txt
+
+module load python/3.6.4
+
+#python3 simulate.py --configFileNames config_overhead_2_50_50.xml config_overhead_4_50_50.xml config_overhead_6_50_50.xml config_overhead_8_50_50.xml --resultsFN evals_def.csv
+
+python3 simulate.py --configFileNames config_overhead_2_50_50.xml config_overhead_4_50_50.xml config_overhead_6_50_50.xml config_overhead_8_50_50.xml --schedNames FROG.py --numChrom 100 --resultsFN evals_ga.csv --pklFileName evals_ga.pkl --numGen 75 -mr 0.6 --crossover OX2 -cke -ms
+
+
+
+
+
+
+
