@@ -63,18 +63,3 @@ python3 simulate.py --configFileNames config_2_25_25.xml --schedNames FROG.py --
 python3 simulate.py --configFileNames config_2_25_25.xml --schedNames FROG.py --numChrom 100 --resultsFN crossTest_cus.csv --pklFileName crossTest_cus.pkl --numGen 75 -mr 0.6 --crossover Custom
 python3 simulate.py --configFileNames config_2_25_25.xml --schedNames FROG.py --numChrom 100 --resultsFN crossTest_cuse.csv --pklFileName crossTest_cuse.pkl --numGen 75 -mr 0.6 --crossover Custom -cke
 
-
------------------------------------
-Comprehensive Table Run 
------------------------------------
-GA
-
-Rest
-
-
-
-
-
-
-script submission:
-qsub -b /afs/crc.nd.edu/user/y/yzhang46/ve_os_project/FrogScheduling/output.txt ./scripts/draft_crossovers.job

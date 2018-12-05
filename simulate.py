@@ -146,7 +146,7 @@ def check_args(args):
                                                         args.configFileNames]
         for configFilePath in configPaths:
             assert os.path.isfile(configFilePath), \
-                f'Config File {args.configFilePath} is invalid'
+                f'Config File {configFilePath} is invalid'
     else:
         for filename in os.listdir(os.path.join(currPath,'ConfigurationFiles')):
             configFileNames.append(filename)

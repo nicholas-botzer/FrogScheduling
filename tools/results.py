@@ -49,7 +49,7 @@ class Results():
         so = model.results.scheduler.schedule_overhead
         ao = model.results.scheduler.activate_overhead
 
-        resultString = (f'{configuration},{scheduler}'
+        resultString = (f'{configuration},{scheduler},'
                          f'{de},{pre},{mig},{nl},{fs},{so},{ao}\n')
         outputFile.write(resultString)
 
